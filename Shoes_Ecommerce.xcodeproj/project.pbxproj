@@ -6,6 +6,14 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		B68617BE2F6F09A400A05976 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B68617BD2F6F09A400A05976 /* FirebaseAnalytics */; };
+		B68617C02F6F09A400A05976 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B68617BF2F6F09A400A05976 /* FirebaseAuth */; };
+		B68617C22F6F09A400A05976 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = B68617C12F6F09A400A05976 /* FirebaseFirestore */; };
+		B68617C52F6F0A0900A05976 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = B68617C42F6F0A0900A05976 /* GoogleSignIn */; };
+		B68617C72F6F0A0900A05976 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B68617C62F6F0A0900A05976 /* GoogleSignInSwift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		B66390682F6E11C700852DE7 /* Shoes_Ecommerce.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shoes_Ecommerce.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +31,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B68617C72F6F0A0900A05976 /* GoogleSignInSwift in Frameworks */,
+				B68617BE2F6F09A400A05976 /* FirebaseAnalytics in Frameworks */,
+				B68617C52F6F0A0900A05976 /* GoogleSignIn in Frameworks */,
+				B68617C02F6F09A400A05976 /* FirebaseAuth in Frameworks */,
+				B68617C22F6F09A400A05976 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +78,11 @@
 			);
 			name = Shoes_Ecommerce;
 			packageProductDependencies = (
+				B68617BD2F6F09A400A05976 /* FirebaseAnalytics */,
+				B68617BF2F6F09A400A05976 /* FirebaseAuth */,
+				B68617C12F6F09A400A05976 /* FirebaseFirestore */,
+				B68617C42F6F0A0900A05976 /* GoogleSignIn */,
+				B68617C62F6F0A0900A05976 /* GoogleSignInSwift */,
 			);
 			productName = Shoes_Ecommerce;
 			productReference = B66390682F6E11C700852DE7 /* Shoes_Ecommerce.app */;
@@ -94,6 +112,10 @@
 			);
 			mainGroup = B663905F2F6E11C700852DE7;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				B68617BC2F6F09A400A05976 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				B68617C32F6F0A0900A05976 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B66390692F6E11C700852DE7 /* Products */;
 			projectDirPath = "";
@@ -259,8 +281,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -291,8 +313,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -332,6 +354,53 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B68617BC2F6F09A400A05976 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.11.0;
+			};
+		};
+		B68617C32F6F0A0900A05976 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B68617BD2F6F09A400A05976 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B68617BC2F6F09A400A05976 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		B68617BF2F6F09A400A05976 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B68617BC2F6F09A400A05976 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		B68617C12F6F09A400A05976 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B68617BC2F6F09A400A05976 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		B68617C42F6F0A0900A05976 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B68617C32F6F0A0900A05976 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		B68617C62F6F0A0900A05976 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B68617C32F6F0A0900A05976 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B66390602F6E11C700852DE7 /* Project object */;
 }
