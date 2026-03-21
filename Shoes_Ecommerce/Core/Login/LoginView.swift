@@ -38,7 +38,7 @@ extension LoginView {
                 loginFormBackground
                 
                 // foreground
-                signupFormForeground
+                loginFormForeground
             }
             
         }
@@ -60,7 +60,7 @@ extension LoginView {
             .ignoresSafeArea()
     }
     
-    private var signupFormForeground: some View {
+    private var loginFormForeground: some View {
         VStack {
             
             // next: add google Signin Button
@@ -69,7 +69,7 @@ extension LoginView {
             
             PasswordTextFieldItem(text: $vm.password)
             
-            signupSubmitButton
+            loginSubmitButton
             
             registerFooterItem
         }
@@ -77,7 +77,7 @@ extension LoginView {
         .padding(.horizontal)
     }
     
-    private var signupSubmitButton: some View {
+    private var loginSubmitButton: some View {
         SubmitButton(text: "log in", bgColor: .black) {
             // action
         }
