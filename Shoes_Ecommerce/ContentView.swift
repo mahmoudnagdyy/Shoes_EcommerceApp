@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     
     enum allScreens {
-        case signup, login
+        case signup, login, root
     }
     
     @State var currentScreen: allScreens = .login
@@ -22,6 +22,8 @@ struct ContentView: View {
                 loginView
             case .signup:
                 signupView
+            case .root:
+                Text("Root Screen")
             }
             
         }
@@ -37,14 +39,18 @@ extension ContentView {
     private var loginView: some View {
         LoginView(onSignupLinkPressed: {
             onSignupLinkPressed()
+        }, onLoginButtonPressed: {
+            onLoginButtonPressed()
         })
         .transition(.move(edge: .leading))
     }
     
     private var signupView: some View {
-        SignupView {
+        SignupView(onLoginLinkPressed: {
             onloginLinkPressed()
-        }
+        }, onSignupButtonPressed: {
+            onSignupButtonPressed()
+        })
         .transition(.move(edge: .trailing))
     }
     
@@ -62,6 +68,18 @@ extension ContentView {
     private func onloginLinkPressed() {
         withAnimation {
             currentScreen = .login
+        }
+    }
+    
+    private func onSignupButtonPressed() {
+        withAnimation {
+            currentScreen = .root
+        }
+    }
+    
+    private func onLoginButtonPressed() {
+        withAnimation {
+            currentScreen = .root
         }
     }
     
