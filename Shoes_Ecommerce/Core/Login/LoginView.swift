@@ -12,6 +12,7 @@ struct LoginView: View {
     @StateObject var vm = LoginViewModel()
     
     let onSignupLinkPressed: () -> Void
+    let onLoginButtonPressed: () -> Void
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -27,7 +28,10 @@ struct LoginView: View {
 #Preview {
     LoginView {
         
+    } onLoginButtonPressed: {
+        
     }
+
 }
 
 
@@ -68,15 +72,20 @@ extension LoginView {
         ScrollView(.vertical) {
             VStack {
                 
-                GoogleSignInButton {
-                    // action
-                }
+                googleSignInButton
                 
                 orSeparator
                 
                 EmailTextFieldItem(text: $vm.email)
                 
                 PasswordTextFieldItem(text: $vm.password)
+                
+                if let loginError = vm.loginError {
+                    Text(loginError)
+                        .foregroundColor(.red)
+                        .font(.headline)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
                 
                 loginSubmitButton
                 
@@ -90,7 +99,7 @@ extension LoginView {
     
     private var loginSubmitButton: some View {
         SubmitButton(text: "log in", bgColor: .black) {
-            // action
+            loginSubmitButtonFunction()
         }
     }
     
@@ -105,6 +114,39 @@ extension LoginView {
             .font(.headline)
             .foregroundStyle(.gray)
             .padding(.bottom)
+    }
+    
+    private var googleSignInButton: some View {
+        GoogleSignInButton {
+            Task {
+                do {
+                    try await AuthenticationManager.shared.signInWithGoogle()
+                    onLoginButtonPressed()
+                } catch {
+                    print(error)
+                }
+            }
+        }
+    }
+    
+}
+
+
+extension LoginView {
+    
+    private func loginSubmitButtonFunction() {
+        Task {
+            do {
+                try await AuthenticationManager.shared.signInWithEmailAndPassword(email: vm.email, password: vm.password)
+                vm.email = ""
+                vm.password = ""
+                vm.loginError = nil
+                onLoginButtonPressed()
+            } catch {
+                vm.loginError = "Email or password is incorrect."
+                print(error)
+            }
+        }
     }
     
 }
