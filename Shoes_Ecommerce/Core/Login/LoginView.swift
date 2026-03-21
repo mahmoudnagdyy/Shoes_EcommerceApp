@@ -60,8 +60,8 @@ extension LoginView {
     
     private var loginFormBackground: some View {
         Color.white
-            .cornerRadius(40)
-            .ignoresSafeArea()
+            .clipShape(UnevenRoundedRectangle(topLeadingRadius: 40, topTrailingRadius: 40))
+            .ignoresSafeArea(edges: [.bottom])
     }
     
     private var loginFormForeground: some View {
