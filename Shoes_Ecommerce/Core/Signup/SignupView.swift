@@ -60,8 +60,8 @@ extension SignupView {
     
     private var signupFormBackground: some View {
         Color.white
-            .cornerRadius(40)
-            .ignoresSafeArea()
+            .clipShape(UnevenRoundedRectangle(topLeadingRadius: 40, topTrailingRadius: 40))
+            .ignoresSafeArea(edges: [.bottom])
     }
     
     private var signupFormForeground: some View {
