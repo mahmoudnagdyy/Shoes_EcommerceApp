@@ -11,6 +11,8 @@ struct SignupView: View {
     
     @StateObject var vm = SignupViewModel()
     
+    let onLoginLinkPressed: () -> Void
+    
     var body: some View {
         ZStack(alignment: .top) {
             // background
@@ -23,7 +25,9 @@ struct SignupView: View {
 }
 
 #Preview {
-    SignupView()
+    SignupView {
+        
+    }
 }
 
 
@@ -94,7 +98,7 @@ extension SignupView {
     
     private var registerFooterItem: some View {
         RegisterFooterItem(text: "Have an account?", linkText: "login here") {
-            // action
+            onLoginLinkPressed()
         }
     }
 }
