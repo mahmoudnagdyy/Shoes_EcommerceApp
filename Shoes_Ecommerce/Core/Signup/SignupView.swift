@@ -65,22 +65,29 @@ extension SignupView {
     }
     
     private var signupFormForeground: some View {
-        VStack {
-            
-            // next: add google Signin Button
-            
-            nameTextFields
-            
-            EmailTextFieldItem(text: $vm.email)
-            
-            PasswordTextFieldItem(text: $vm.password)
-            
-            signupSubmitButton
-            
-            registerFooterItem
+        ScrollView(.vertical) {
+            VStack {
+                                
+                GoogleSignInButton {
+                    // action
+                }
+                
+                orSeparator
+                
+                nameTextFields
+                
+                EmailTextFieldItem(text: $vm.email)
+                
+                PasswordTextFieldItem(text: $vm.password)
+                
+                signupSubmitButton
+                
+                registerFooterItem
+            }
+            .padding(.vertical, 40)
+            .padding(.horizontal)
         }
-        .padding(.vertical, 40)
-        .padding(.horizontal)
+        .scrollIndicators(.hidden)
     }
     
     private var nameTextFields: some View {
@@ -100,5 +107,12 @@ extension SignupView {
         RegisterFooterItem(text: "Have an account?", linkText: "login here") {
             onLoginLinkPressed()
         }
+    }
+    
+    private var orSeparator: some View {
+        Text("or")
+            .font(.headline)
+            .foregroundStyle(.gray)
+            .padding(.bottom)
     }
 }
