@@ -23,7 +23,8 @@ struct ContentView: View {
             case .signup:
                 signupView
             case .root:
-                Text("Root Screen")
+                RootView()
+                    .transition(.move(edge: .bottom))
             }
             
         }
