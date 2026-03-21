@@ -69,16 +69,11 @@ extension SignupView {
             
             EmailTextFieldItem(text: $vm.email)
             
-            
             PasswordTextFieldItem(text: $vm.password)
             
-            SubmitButton(text: "create account", bgColor: .black) {
-                // action
-            }
+            signupSubmitButton
             
-            RegisterFooterItem(text: "Have an account?", linkText: "login here") {
-                // action
-            }
+            registerFooterItem
         }
         .padding(.vertical, 40)
         .padding(.horizontal)
@@ -91,4 +86,15 @@ extension SignupView {
         }
     }
     
+    private var signupSubmitButton: some View {
+        SubmitButton(text: "create account", bgColor: .black) {
+            // action
+        }
+    }
+    
+    private var registerFooterItem: some View {
+        RegisterFooterItem(text: "Have an account?", linkText: "login here") {
+            // action
+        }
+    }
 }
