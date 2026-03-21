@@ -15,7 +15,7 @@ struct ContentView: View {
     
     @State var currentScreen: allScreens = .login
     
-    var body: some View {
+    var body: some View { 
         ZStack {
             switch currentScreen {
             case .login:
