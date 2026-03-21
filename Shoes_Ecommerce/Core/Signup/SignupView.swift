@@ -12,6 +12,7 @@ struct SignupView: View {
     @StateObject var vm = SignupViewModel()
     
     let onLoginLinkPressed: () -> Void
+    let onSignupButtonPressed: () -> Void
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -27,7 +28,10 @@ struct SignupView: View {
 #Preview {
     SignupView {
         
+    } onSignupButtonPressed: {
+        
     }
+
 }
 
 
@@ -68,9 +72,7 @@ extension SignupView {
         ScrollView(.vertical) {
             VStack {
                                 
-                GoogleSignInButton {
-                    // action
-                }
+                googleSignInButton
                 
                 orSeparator
                 
@@ -79,6 +81,13 @@ extension SignupView {
                 EmailTextFieldItem(text: $vm.email)
                 
                 PasswordTextFieldItem(text: $vm.password)
+                
+                if let signupError = vm.signupError {
+                    Text(signupError)
+                        .foregroundStyle(.red)
+                        .font(.headline)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
                 
                 signupSubmitButton
                 
@@ -99,7 +108,7 @@ extension SignupView {
     
     private var signupSubmitButton: some View {
         SubmitButton(text: "create account", bgColor: .black) {
-            // action
+            signupSubmitButtonFunction()
         }
     }
     
@@ -115,4 +124,47 @@ extension SignupView {
             .foregroundStyle(.gray)
             .padding(.bottom)
     }
+    
+    private var googleSignInButton: some View {
+        GoogleSignInButton {
+            Task {
+                do {
+                    try await AuthenticationManager.shared.signInWithGoogle()
+                    onSignupButtonPressed()
+                } catch {
+                    print(error)
+                }
+            }
+        }
+    }
+}
+
+
+
+
+extension SignupView {
+    
+    private func signupSubmitButtonFunction() {
+        Task {
+            do {
+                try await AuthenticationManager.shared
+                    .signUpWithEmailAndPassword(firstName: vm.firstName, lastName: vm.lastName, email: vm.email, password: vm.password)
+                vm.firstName = ""
+                vm.email = ""
+                vm.lastName = ""
+                vm.password = ""
+                vm.signupError = nil
+                onSignupButtonPressed()
+            } catch {
+                if vm.password.count < 6 {
+                    vm.signupError = "The password must be 6 characters long or more."
+                }
+                else {
+                    vm.signupError = "Email is already exist."
+                }
+                print(error)
+            }
+        }
+    }
+    
 }
