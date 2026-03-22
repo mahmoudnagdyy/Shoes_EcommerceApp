@@ -43,13 +43,9 @@ extension ProfileView {
                 
                 displayUserName()
                 
-                HStack {
-                    Image(systemName: "envelope.fill")
-                    Text(vm.user?.email ?? "no email")
-                }
-                
+                ProfileItemView(text: vm.user?.email ?? "no email", iconName: "envelope.fill")
             }
-            .padding(.vertical)
+            .padding()
         }
         .scrollIndicators(.hidden)
     }

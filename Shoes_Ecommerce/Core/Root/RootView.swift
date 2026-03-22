@@ -19,11 +19,15 @@ struct RootView: View {
             
             Rectangle()
                 .fill(Color.yellow)
-                .tabItem(tab: TabModel(title: "settings", iconName: "gear"), selectedTab: selectedTab)
+                .tabItem(tab: TabModel(title: "cart", iconName: "handbag.fill"), selectedTab: selectedTab)
             
             Rectangle() 
                 .fill(Color.orange)
                 .tabItem(tab: TabModel(title: "favorites", iconName: "heart.fill"), selectedTab: selectedTab)
+            
+            Rectangle()
+                .fill(Color.yellow)
+                .tabItem(tab: TabModel(title: "dashboard", iconName: "square.grid.2x2"), selectedTab: selectedTab)
             
             ProfileView()
                 .tabItem(tab: TabModel(title: "profile", iconName: "person.fill"), selectedTab: selectedTab)
