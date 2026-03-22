@@ -13,7 +13,7 @@ struct ContentView: View {
         case signup, login, root
     }
     
-    @State var currentScreen: allScreens = .login
+    @State var currentScreen: allScreens = .root
     
     var body: some View {
         ZStack { 
@@ -26,7 +26,6 @@ struct ContentView: View {
                 RootView()
                     .transition(.move(edge: .bottom))
             }
-            
         }
     }
 }

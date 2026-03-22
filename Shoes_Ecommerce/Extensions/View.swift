@@ -23,4 +23,8 @@ extension View {
         modifier(SubmitButtonViewModifier(bgColor: bgColor))
     }
     
+    func tabItem(tab: TabModel, selectedTab: TabModel) -> some View {
+        modifier(TabItemViewModifier(tab: tab, selectedTab: selectedTab))
+    }
+    
 }

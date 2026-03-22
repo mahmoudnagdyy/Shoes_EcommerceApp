@@ -25,4 +25,18 @@ class FirestoreUserManager {
         try await userDocument(userID: user.id).setData(user.userDict)
     }
     
+    func getUserUsingLisitner(userId: String) -> AnyPublisher<UserModel, Never> {
+        let publisher = PassthroughSubject<UserModel, Never>()
+        userDocument(userID: userId).addSnapshotListener { snapshot, error in
+            guard let snapshot, error == nil else {return}
+            do {
+                let user = try snapshot.data(as: UserModel.self)
+                publisher.send(user)
+            } catch {
+                print(error)
+            }
+        }
+        return publisher.eraseToAnyPublisher()
+    }
+    
 }
