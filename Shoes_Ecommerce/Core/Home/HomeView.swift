@@ -15,7 +15,7 @@ struct HomeView: View {
         
         ZStack {
             // background
-            Color(#colorLiteral(red: 0.8941176471, green: 0.8901960784, blue: 0.8745098039, alpha: 1)).ignoresSafeArea()
+            Color.mainBg.ignoresSafeArea()
             
             // foreground
             homeForegroundContainer
@@ -45,8 +45,11 @@ extension HomeView {
             homeHeaderText
             Spacer()
             
-            if let photoUrl = vm.user?.photoUrl {
-                WebImageItem(imageUrl: photoUrl, width: 50, height: 50)
+            if let image = vm.user?.image {
+                UserWebImageItem(imageUrl: image.secureUrl, width: 50, height: 50)
+            }
+            else if let photoUrl = vm.user?.photoUrl {
+                UserWebImageItem(imageUrl: photoUrl, width: 50, height: 50)
             } else {
                 noUserImageIcon
             }

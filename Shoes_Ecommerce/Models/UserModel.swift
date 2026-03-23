@@ -9,6 +9,16 @@ import Foundation
 import FirebaseAuth
 
 
+struct ImageModel: Codable {
+    let publicId: String
+    let secureUrl: String
+    
+    enum CodingKeys: String, CodingKey {
+        case publicId = "public_id"
+        case secureUrl = "secure_url"
+    }
+}
+
 
 struct UserModel: Codable {
     let id: String
@@ -16,6 +26,7 @@ struct UserModel: Codable {
     let lastName: String
     let email: String
     let photoUrl: String?
+    let image: ImageModel?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -23,6 +34,7 @@ struct UserModel: Codable {
         case lastName = "last_name"
         case email
         case photoUrl = "photo_url"
+        case image
     }
     
     
@@ -32,7 +44,7 @@ struct UserModel: Codable {
             UserModel.CodingKeys.firstName.rawValue: firstName.lowercased(),
             UserModel.CodingKeys.lastName.rawValue: lastName.lowercased(),
             UserModel.CodingKeys.email.rawValue: email.lowercased(),
-            UserModel.CodingKeys.photoUrl.rawValue: photoUrl ?? ""
+            UserModel.CodingKeys.photoUrl.rawValue: photoUrl ?? "",
         ]
     }
 }

@@ -10,11 +10,12 @@ import SwiftUI
 struct ProfileView: View {
     
     @StateObject var vm = ProfileViewModel()
+    let onLogoutButtonPressed: () -> Void
     
     var body: some View {
         ZStack {
             // background
-            Color(#colorLiteral(red: 0.8941176471, green: 0.8901960784, blue: 0.8745098039, alpha: 1)).ignoresSafeArea()
+            Color.mainBg.ignoresSafeArea()
             
             // foreground
             profileForegroundContainer
@@ -23,7 +24,9 @@ struct ProfileView: View {
 }
 
 #Preview {
-    ProfileView()
+    ProfileView {
+        
+    }
 }
 
 
@@ -35,10 +38,15 @@ extension ProfileView {
                 
                 logoutButton
                 
-                if let photoUrl = vm.user?.photoUrl {
-                    WebImageItem(imageUrl: photoUrl, width: 100, height: 100)
+                if let image = vm.user?.image {
+                    UserPhotoPickerItemView(imageLink: image.secureUrl,
+                                        showChangeImageCover: $vm.showChangeImageCover)
+                }
+                else if let photoUrl = vm.user?.photoUrl {
+                    UserPhotoPickerItemView(imageLink: photoUrl,
+                                        showChangeImageCover: $vm.showChangeImageCover)
                 } else {
-                    noUserImage
+                    noUserImagePhotoPicker 
                 }
                 
                 displayUserName()
@@ -46,6 +54,9 @@ extension ProfileView {
                 ProfileItemView(text: vm.user?.email ?? "no email", iconName: "envelope.fill")
             }
             .padding()
+            .fullScreenCover(isPresented: $vm.showChangeImageCover) {
+                UploadUserImageView(vm: vm)
+            }
         }
         .scrollIndicators(.hidden)
     }
@@ -62,7 +73,12 @@ extension ProfileView {
     
     private var logoutButton: some View {
         Button {
-            // action
+            do {
+                try AuthenticationManager.shared.logout()
+                onLogoutButtonPressed()
+            } catch {
+                print(error)
+            }
         } label: {
             Image(systemName: "iphone.and.arrow.forward.outward")
                 .frame(width: 55, height: 55)
@@ -73,6 +89,18 @@ extension ProfileView {
                 .font(.title)
         }
         .frame(maxWidth: .infinity, alignment: .trailing)
+    }
+    
+    private var noUserImagePhotoPicker: some View {
+        ZStack(alignment: .bottomTrailing) {
+            noUserImage
+            Image(systemName: "pencil.circle.fill")
+                .font(.title)
+                .offset(x: 18, y: 10)
+                .onTapGesture {
+                    vm.showChangeImageCover.toggle()
+                }
+        }
     }
     
 }

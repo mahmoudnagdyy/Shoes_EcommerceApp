@@ -22,10 +22,16 @@ class AuthenticationManager {
             firstName: String(fName),
             lastName: String(lName),
             email: authResult.user.email ?? "",
-            photoUrl: authResult.user.photoURL?.absoluteString
+            photoUrl: authResult.user.photoURL?.absoluteString,
+            image: nil
         )
         
         try await FirestoreUserManager.shared.saveUser(user: user)
+    }
+    
+    
+    func logout() throws {
+        try Auth.auth().signOut()
     }
     
 }
@@ -41,7 +47,8 @@ extension AuthenticationManager {
             firstName: firstName,
             lastName: lastName,
             email: email,
-            photoUrl: nil
+            photoUrl: nil,
+            image: nil
         )
         try await FirestoreUserManager.shared.saveUser(user: user)
     }

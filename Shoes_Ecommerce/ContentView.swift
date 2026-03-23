@@ -23,8 +23,7 @@ struct ContentView: View {
             case .signup:
                 signupView
             case .root:
-                RootView()
-                    .transition(.move(edge: .bottom))
+                rootView
             }
         }
     }
@@ -54,6 +53,13 @@ extension ContentView {
         .transition(.move(edge: .trailing))
     }
     
+    private var rootView: some View {
+        RootView(onLogoutButtonPressed: {
+            onLogoutButtonPressed()
+        })
+        .transition(.move(edge: .bottom))
+    }
+    
 }
 
 
@@ -80,6 +86,12 @@ extension ContentView {
     private func onLoginButtonPressed() {
         withAnimation {
             currentScreen = .root
+        }
+    }
+    
+    private func onLogoutButtonPressed() {
+        withAnimation {
+            currentScreen = .login
         }
     }
     

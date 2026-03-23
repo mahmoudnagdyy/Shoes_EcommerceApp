@@ -10,6 +10,7 @@ import SwiftUI
 struct RootView: View {
     
     @State var selectedTab: TabModel = TabModel(title: "home", iconName: "house.fill")
+    let onLogoutButtonPressed: () -> Void
     
     var body: some View {
         
@@ -25,17 +26,20 @@ struct RootView: View {
                 .fill(Color.orange)
                 .tabItem(tab: TabModel(title: "favorites", iconName: "heart.fill"), selectedTab: selectedTab)
             
-            Rectangle()
-                .fill(Color.yellow)
+            DashboardView()
                 .tabItem(tab: TabModel(title: "dashboard", iconName: "square.grid.2x2"), selectedTab: selectedTab)
             
-            ProfileView()
-                .tabItem(tab: TabModel(title: "profile", iconName: "person.fill"), selectedTab: selectedTab)
+            ProfileView(onLogoutButtonPressed: {
+                onLogoutButtonPressed()
+            })
+            .tabItem(tab: TabModel(title: "profile", iconName: "person.fill"), selectedTab: selectedTab)
         }
         
     }
 }
 
 #Preview {
-    RootView()
+    RootView {
+        
+    }
 }

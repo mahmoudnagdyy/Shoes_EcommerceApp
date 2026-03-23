@@ -22,7 +22,7 @@ class FirestoreUserManager {
     }
     
     func saveUser(user: UserModel) async throws {
-        try await userDocument(userID: user.id).setData(user.userDict)
+        try await userDocument(userID: user.id).setData(user.userDict, merge: true)
     }
     
     func getUserUsingLisitner(userId: String) -> AnyPublisher<UserModel, Never> {
@@ -37,6 +37,18 @@ class FirestoreUserManager {
             }
         }
         return publisher.eraseToAnyPublisher()
+    }
+    
+    func uploadImage(userId: String, image: ImageModel) async throws {
+        let imageDict: [String: Any] = [
+            ImageModel.CodingKeys.publicId.rawValue: image.publicId,
+            ImageModel.CodingKeys.secureUrl.rawValue: image.secureUrl
+        ]
+        try await userDocument(userID: userId).setData(["image": imageDict], merge: true)
+    }
+    
+    func getUser(userId: String) async throws -> UserModel? {
+        return try? await userDocument(userID: userId).getDocument(as: UserModel.self)
     }
     
 }

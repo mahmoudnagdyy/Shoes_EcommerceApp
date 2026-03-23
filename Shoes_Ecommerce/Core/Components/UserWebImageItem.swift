@@ -9,7 +9,7 @@ import SwiftUI
 import SDWebImage
 import SDWebImageSwiftUI
 
-struct WebImageItem: View {
+struct UserWebImageItem: View {
     
     let url: URL?
     let width: CGFloat
@@ -26,7 +26,11 @@ struct WebImageItem: View {
             image
                 .resizable()
                 .frame(width: width, height: height)
-                .scaledToFill()
+                .clipShape(.circle)
+                .overlay {
+                    Circle()
+                        .stroke(Color(#colorLiteral(red: 0.8862745098, green: 0.4588235294, blue: 0.3254901961, alpha: 1)), lineWidth: 3)
+                }
         } placeholder: {
             Circle()
                 .frame(width: width, height: height)
@@ -39,5 +43,5 @@ struct WebImageItem: View {
 }
 
 #Preview {
-    WebImageItem(imageUrl: "", width: 100, height: 100)
+    UserWebImageItem(imageUrl: "", width: 50, height: 50)
 }
