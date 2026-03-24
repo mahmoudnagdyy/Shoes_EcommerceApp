@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RootView: View {
     
+    @StateObject var vm = RootViewModel()
     @State var selectedTab: TabModel = TabModel(title: "home", iconName: "house.fill")
     let onLogoutButtonPressed: () -> Void
     
@@ -26,8 +27,11 @@ struct RootView: View {
                 .fill(Color.orange)
                 .tabItem(tab: TabModel(title: "favorites", iconName: "heart.fill"), selectedTab: selectedTab)
             
-            DashboardView()
-                .tabItem(tab: TabModel(title: "dashboard", iconName: "square.grid.2x2"), selectedTab: selectedTab)
+            if let user = vm.user,
+               user.role == "admin" {
+                DashboardView()
+                    .tabItem(tab: TabModel(title: "dashboard", iconName: "square.grid.2x2"), selectedTab: selectedTab)
+            }
             
             ProfileView(onLogoutButtonPressed: {
                 onLogoutButtonPressed()

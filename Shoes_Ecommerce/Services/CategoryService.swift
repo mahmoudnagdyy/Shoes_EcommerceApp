@@ -1,22 +1,23 @@
 //
-//  UploadPhotoService.swift
+//  UploadCategoryPhotoService.swift
 //  Shoes_Ecommerce
 //
 //  Created by Mahmoud Nagdy on 23/03/2026.
 //
 
 import Foundation
-import UIKit
+import SwiftUI
 
-class UploadUserPhotoService {
+
+class CategoryService {
     
-    static let shared = UploadUserPhotoService()
+    static let shared = CategoryService()
     
     private init() {}
     
     
-    func uploadPhoto(userId: String, image: UIImage) async throws -> ImageModel {
-        guard let url = URL(string: "http://localhost:5050/user") else {
+    func uploadCategoryPhoto(categoryName: String, image: UIImage) async throws -> ImageModel {
+        guard let url = URL(string: "http://localhost:5050/category") else {
             throw URLError(.badURL)
         }
         
@@ -30,8 +31,8 @@ class UploadUserPhotoService {
         
         // userId
         data.append("--\(boundary)\r\n")
-        data.append("Content-Disposition: form-data; name=\"userId\"\r\n\r\n")
-        data.append("\(userId)\r\n")
+        data.append("Content-Disposition: form-data; name=\"categoryName\"\r\n\r\n")
+        data.append("\(categoryName)\r\n")
         
         // image
         let imageData = image.jpegData(compressionQuality: 0.8)!
@@ -47,14 +48,14 @@ class UploadUserPhotoService {
         
         let (returnedData, _) = try await URLSession.shared.data(for: request)
         
-        let decodedData = try JSONDecoder().decode(uploadUserPhotoResponseModel.self, from: returnedData)
+        let decodedData = try JSONDecoder().decode(uploadCategoryPhotoResponseModel.self, from: returnedData)
         return decodedData.image
     }
     
 }
 
 
-struct uploadUserPhotoResponseModel: Codable {
+struct uploadCategoryPhotoResponseModel: Codable {
     let message: String
     let image: ImageModel
 }

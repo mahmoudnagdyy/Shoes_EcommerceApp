@@ -49,7 +49,7 @@ class ProfileViewModel: ObservableObject {
     
     func uploadImage() async throws {
         guard let user, let image else { return }
-        let returnedImage = try await UploadUserPhotoService.shared.uploadPhoto(userId: user.id, image: image)
+        let returnedImage = try await UserService.shared.uploadPhoto(userId: user.id, image: image)
         try await FirestoreUserManager.shared.uploadImage(userId: user.id, image: returnedImage)
     }
     

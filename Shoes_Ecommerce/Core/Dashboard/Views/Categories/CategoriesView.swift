@@ -50,7 +50,7 @@ extension CategoriesView {
         }
         .padding()
         .fullScreenCover(isPresented: $showAddCategoryView) {
-            AddCategoriesView(vm: vm)
+            AddCategoryView(vm: vm)
         }
     }
     

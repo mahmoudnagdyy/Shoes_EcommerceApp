@@ -35,8 +35,14 @@ struct DashboardView: View {
                     NavigationLink {
                         ProductsView(vm: vm)
                     } label: {
-                        Text("products".capitalized)
-                            .font(.headline)
+                        HStack {
+                            Text("products".capitalized)
+                                .font(.headline)
+                            Spacer()
+                            if vm.products.count > 0 {
+                                productsCountText
+                            }
+                        }
                     }
 
                 }
@@ -59,6 +65,17 @@ extension DashboardView {
             .frame(width: 25, height: 25)
             .overlay {
                 Text("\(vm.categories.count)")
+                    .foregroundStyle(.white)
+                    .font(.headline)
+            }
+    }
+    
+    private var productsCountText: some View {
+        Circle()
+            .fill(.red)
+            .frame(width: 25, height: 25)
+            .overlay {
+                Text("\(vm.products.count)")
                     .foregroundStyle(.white)
                     .font(.headline)
             }

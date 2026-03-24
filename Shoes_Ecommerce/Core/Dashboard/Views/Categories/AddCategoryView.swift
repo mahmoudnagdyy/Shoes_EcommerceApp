@@ -8,7 +8,7 @@
 import SwiftUI
 import PhotosUI
 
-struct AddCategoriesView: View {
+struct AddCategoryView: View {
     
     @ObservedObject var vm: DashboardViewModel
     @Environment(\.dismiss) var dismiss
@@ -26,11 +26,11 @@ struct AddCategoriesView: View {
 }
 
 #Preview {
-    AddCategoriesView(vm: DashboardViewModel())
+    AddCategoryView(vm: DashboardViewModel())
 }
 
 
-extension AddCategoriesView {
+extension AddCategoryView {
     
     private var AddCategoriesForeground: some View {
         ScrollView(.vertical) {
@@ -67,7 +67,7 @@ extension AddCategoriesView {
         
         ZStack(alignment: .bottomTrailing) {
             Group {
-                if let image = vm.image {
+                if let image = vm.Categoryimage {
                     Image(uiImage: image)
                         .resizable()
                         .scaledToFill()
@@ -79,7 +79,7 @@ extension AddCategoriesView {
             }
             .frame(width: 200, height: 200)
             
-            PhotosPicker(selection: $vm.selectedImage) {
+            PhotosPicker(selection: $vm.selectedCategoryImage) {
                 Image(systemName: "camera.fill")
                     .foregroundStyle(.black)
                     .font(.title)
@@ -107,8 +107,8 @@ extension AddCategoriesView {
                     try await vm.createCategory()
                     isloading = false
                     vm.categoryName = ""
-                    vm.selectedImage = nil
-                    vm.image = nil
+                    vm.selectedCategoryImage = nil
+                    vm.Categoryimage = nil
                 } catch {
                     isloading = false
                     print(error)

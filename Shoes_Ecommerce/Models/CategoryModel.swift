@@ -8,7 +8,8 @@
 import Foundation
 
 
-struct CategoryModel: Codable, Identifiable {
+struct CategoryModel: Codable, Identifiable, Hashable {
+    
     let id: String
     let categoryName: String
     let image: ImageModel
@@ -28,5 +29,9 @@ struct CategoryModel: Codable, Identifiable {
                 "secure_url": image.secureUrl
             ]
         ]
+    }
+    
+    static func == (lhs: CategoryModel, rhs: CategoryModel) -> Bool {
+        lhs.id == rhs.id
     }
 }
