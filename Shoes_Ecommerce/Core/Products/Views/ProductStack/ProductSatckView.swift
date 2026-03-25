@@ -6,58 +6,17 @@
 //
 
 import SwiftUI
-internal import Combine
-
-class ProductStackViewModel: ObservableObject {
-    
-    @Published var productCategory: CategoryModel?
-    @Published var product: ProductModel
-    @Published var sizes: [ProductSizeModel] = []
-    @Published var selectedSize: ProductSizeModel?
-    
-    var cancellables = Set<AnyCancellable>()
-    
-    init(product: ProductModel) {
-        self.product = product
-        getProductCategory(categoryId: product.categoryId)
-        if !product.id.isEmpty {
-            getProductSizes(productId: product.id)
-        }
-    }
-    
-    func getProductCategory(categoryId: String) {
-        Task {
-            do {
-                self.productCategory = try await FirestoreCategoryManager.shared.getCategory(categoryId: categoryId)
-            } catch {
-                print(error)
-            }
-        }
-    }
-    
-    func getProductSizes(productId: String) {
-        FirestoreProductManager.shared.getProductSizesUsingListener(productId: productId)
-            .sink { [weak self] productSizes in
-                self?.sizes = productSizes
-                self?.selectedSize = productSizes.first
-            }
-            .store(in: &cancellables)
-    }
-    
-}
 
 struct ProductSatckView: View {
     
-    @StateObject var psVM: ProductStackViewModel
+    @StateObject var vm: ProductStackViewModel
     let product: ProductModel
-    @ObservedObject var dbVM: DashboardViewModel
     @State var showAddSize: Bool = false
     
     
-    init(product: ProductModel, dbVM: DashboardViewModel) {
-        _psVM = StateObject(wrappedValue: ProductStackViewModel(product: product))
+    init(product: ProductModel) {
+        _vm = StateObject(wrappedValue: ProductStackViewModel(product: product))
         self.product = product
-        self.dbVM = dbVM
     }
     
     
@@ -89,7 +48,7 @@ struct ProductSatckView: View {
         price: 120
     )
     NavigationStack {
-        ProductSatckView(product: productPrev, dbVM: DashboardViewModel())
+        ProductSatckView(product: productPrev)
     }
 }
 
@@ -117,7 +76,7 @@ extension ProductSatckView {
                     
                     productSizesScrollView
                     
-                    if psVM.sizes.count > 0 {
+                    if vm.sizes.count > 0 {
                         sizeStockText
                     }
                     
@@ -127,14 +86,14 @@ extension ProductSatckView {
                     Text(product.description)
                         .foregroundStyle(.gray)
                     
-                    if psVM.sizes.count > 0 {
+                    if vm.sizes.count > 0 {
                         addToCartButton
                     }
                         
                 }
                 .padding()
                 .fullScreenCover(isPresented: $showAddSize) {
-                    AddSizeView(vm: dbVM, product: product)
+                    AddSizeView(vm: vm, product: product)
                 }
             }
             .padding(.bottom, 100)
@@ -154,7 +113,7 @@ extension ProductSatckView {
     
     private var isFavoriteButton: some View {
         Button {
-            dbVM.makeProductFavorite(product: product)
+            vm.makeProductFavorite(product: product)
         } label: {
             Image(systemName: product.isFavorite ? "heart.fill" : "heart")
                 .resizable()
@@ -169,7 +128,7 @@ extension ProductSatckView {
                 Text(product.productName.capitalized)
                     .font(.title)
                     .bold()
-                Text(psVM.productCategory?.categoryName.capitalized ?? "N/A")
+                Text(vm.productCategory?.categoryName.capitalized ?? "N/A")
                     .font(.headline)
                     .foregroundStyle(.gray)
             }
@@ -192,8 +151,8 @@ extension ProductSatckView {
     private var productSizesScrollView: some View {
         ScrollView(.horizontal) {
             LazyHStack {
-                ForEach(psVM.sizes) { item in
-                    SizeItemView(item: item, selectedSize: $psVM.selectedSize)
+                ForEach(vm.sizes) { item in
+                    SizeItemView(item: item, selectedSize: $vm.selectedSize)
                 }
             }
         }
@@ -204,7 +163,7 @@ extension ProductSatckView {
         HStack {
             Text("stock:".capitalized)
                 .font(.headline)
-            Text(psVM.selectedSize?.stock.description ?? "0")
+            Text(vm.selectedSize?.stock.description ?? "0")
                 .font(.subheadline)
         }
         .padding(.top)
@@ -214,8 +173,8 @@ extension ProductSatckView {
         SubmitButton(text: "add to cart", bgColor: .black) {
             // action
         }
-        .disabled(psVM.selectedSize?.stock == 0 ? true : false)
-        .opacity(psVM.selectedSize?.stock == 0 ? 0.4 : 1)
+        .disabled(vm.selectedSize?.stock == 0 ? true : false)
+        .opacity(vm.selectedSize?.stock == 0 ? 0.4 : 1)
     }
     
 }

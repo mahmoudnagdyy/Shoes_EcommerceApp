@@ -10,7 +10,7 @@ import PhotosUI
 
 struct AddCategoryView: View {
     
-    @ObservedObject var vm: DashboardViewModel
+    @ObservedObject var vm: CategoryViewModel
     @Environment(\.dismiss) var dismiss
     @State var isloading: Bool = false
     
@@ -26,7 +26,7 @@ struct AddCategoryView: View {
 }
 
 #Preview {
-    AddCategoryView(vm: DashboardViewModel())
+    AddCategoryView(vm: CategoryViewModel())
 }
 
 

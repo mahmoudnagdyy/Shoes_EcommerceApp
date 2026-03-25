@@ -20,26 +20,26 @@ struct DashboardView: View {
             NavigationStack {
                 List {
                     NavigationLink {
-                        CategoriesView(vm: vm)
+                        CategoriesView()
                     } label: {
                         HStack {
                             Text("categories".capitalized)
                                 .font(.headline)
                             Spacer()
-                            if vm.categories.count > 0 {
+                            if vm.categoriesCount > 0 {
                                 categoriesCountText
                             }
                         }
                     }
                     
                     NavigationLink {
-                        ProductsView(vm: vm)
+                        ProductsView()
                     } label: {
                         HStack {
                             Text("products".capitalized)
                                 .font(.headline)
                             Spacer()
-                            if vm.products.count > 0 {
+                            if vm.productsCount > 0 {
                                 productsCountText
                             }
                         }
@@ -64,7 +64,7 @@ extension DashboardView {
             .fill(.red)
             .frame(width: 25, height: 25)
             .overlay {
-                Text("\(vm.categories.count)")
+                Text("\(vm.categoriesCount)")
                     .foregroundStyle(.white)
                     .font(.headline)
             }
@@ -75,7 +75,7 @@ extension DashboardView {
             .fill(.red)
             .frame(width: 25, height: 25)
             .overlay {
-                Text("\(vm.products.count)")
+                Text("\(vm.productsCount)")
                     .foregroundStyle(.white)
                     .font(.headline)
             }

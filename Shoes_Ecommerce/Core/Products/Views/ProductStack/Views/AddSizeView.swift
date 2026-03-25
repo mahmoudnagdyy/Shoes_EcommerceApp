@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AddSizeView: View {
     
-    @ObservedObject var vm: DashboardViewModel
+    @ObservedObject var vm: ProductStackViewModel
     let product: ProductModel
     @Environment(\.dismiss) var dismiss
     @State var isLoading: Bool = false
@@ -26,7 +26,9 @@ struct AddSizeView: View {
 }
 
 #Preview {
-    AddSizeView(vm: DashboardViewModel(), product: ProductModel(id: "", productName: "", categoryId: "", description: "", images: [], price: 0))
+    let product = ProductModel(id: "1", productName: "nike", categoryId: "2", description: "", images: [], price: 0)
+    
+    AddSizeView(vm: ProductStackViewModel(product: product), product: product)
 }
 
 

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProductsView: View {
     
-    @ObservedObject var vm: DashboardViewModel
+    @StateObject var vm = ProductViewModel()
     @State private var columns: [GridItem] = [
         GridItem(.flexible()),
         GridItem(.flexible())
@@ -29,7 +29,7 @@ struct ProductsView: View {
 
 #Preview {
     NavigationStack {
-        ProductsView(vm: DashboardViewModel())
+        ProductsView()
     }
 }
 
@@ -40,7 +40,7 @@ extension ProductsView {
         VStack {
             productsHeaderText
             
-            productScrollView
+            productsScrollView
         }
         .padding()
         .fullScreenCover(isPresented: $showAddProduct) {
@@ -48,12 +48,12 @@ extension ProductsView {
         }
     }
     
-    private var productScrollView: some View {
+    private var productsScrollView: some View {
         ScrollView(.vertical) {
             LazyVGrid(columns: columns, spacing: 10) {
                 ForEach(vm.products) { product in
                     NavigationLink {
-                        ProductSatckView(product: product, dbVM: vm)
+                        ProductSatckView(product: product) 
                     } label: {
                         ProductItemView(product: product) {
                             vm.makeProductFavorite(product: product)
@@ -61,6 +61,7 @@ extension ProductsView {
                     }
                 }
             }
+            .padding(.bottom, 100)
         }
         .scrollIndicators(.hidden)
     }

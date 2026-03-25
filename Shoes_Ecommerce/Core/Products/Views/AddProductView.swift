@@ -10,7 +10,7 @@ import PhotosUI
 
 struct AddProductView: View {
     
-    @ObservedObject var vm: DashboardViewModel
+    @ObservedObject var vm: ProductViewModel
     @Environment(\.dismiss) var dismiss
     @State var isloading: Bool = false
     
@@ -26,7 +26,7 @@ struct AddProductView: View {
 }
 
 #Preview {
-    AddProductView(vm: DashboardViewModel())
+    AddProductView(vm: ProductViewModel())
 }
 
 

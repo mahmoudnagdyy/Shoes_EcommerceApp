@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CategoriesView: View {
     
-    @ObservedObject var vm: DashboardViewModel
+    @StateObject var vm = CategoryViewModel()
     @State private var columns: [GridItem] = [
         GridItem(.flexible()),
         GridItem(.flexible())
@@ -28,7 +28,7 @@ struct CategoriesView: View {
 }
 
 #Preview {
-    CategoriesView(vm: DashboardViewModel())
+    CategoriesView(vm: CategoryViewModel())
 }
 
 
