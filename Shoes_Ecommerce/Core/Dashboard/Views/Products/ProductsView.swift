@@ -53,7 +53,7 @@ extension ProductsView {
             LazyVGrid(columns: columns, spacing: 10) {
                 ForEach(vm.products) { product in
                     NavigationLink {
-                        ProductSatckView(product: product)
+                        ProductSatckView(product: product, dbVM: vm)
                     } label: {
                         ProductItemView(product: product) {
                             vm.makeProductFavorite(product: product)

@@ -35,7 +35,9 @@ extension AddProductView {
     private var AddProductsForeground: some View {
         ScrollView(.vertical) {
             VStack {
-                xmarkButton
+                XButtonView {
+                    dismiss()
+                }
                 
                 productUploadPhotoPicker
                 
@@ -58,16 +60,6 @@ extension AddProductView {
             }
             .padding()
         }
-    }
-    
-    private var xmarkButton: some View {
-        Image(systemName: "xmark")
-            .font(.title)
-            .bold()
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .onTapGesture {
-                dismiss()
-            }
     }
     
     private var productUploadPhotoPicker: some View {
@@ -95,22 +87,11 @@ extension AddProductView {
     }
     
     private var productNameTextField: some View {
-        TextField("product name".capitalized, text: $vm.productName)
-            .frame(height: 60)
-            .padding(.horizontal)
-            .background(.white)
-            .clipShape(.capsule)
-            .font(.headline)
+        DashboardTextField(title: "product name", text: $vm.productName)
     }
     
     private var productPriceTextField: some View {
-        TextField("price".capitalized, text: $vm.productPrice)
-            .frame(height: 60)
-            .padding(.horizontal)
-            .background(.white)
-            .clipShape(.capsule)
-            .font(.headline)
-            .keyboardType(.numberPad)
+        DashboardTextField(title: "price", text: $vm.productPrice)
     }
     
     private var selectCategoryPicker: some View {

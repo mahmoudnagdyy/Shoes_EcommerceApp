@@ -36,4 +36,8 @@ class FirestoreCategoryManager {
         return publisher.eraseToAnyPublisher()
     }
     
+    func getCategory(categoryId: String) async throws -> CategoryModel {
+        try await categoryDocument(categoryId: categoryId).getDocument(as: CategoryModel.self)
+    }
+    
 }

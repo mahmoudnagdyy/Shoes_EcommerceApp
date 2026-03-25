@@ -22,7 +22,9 @@ struct UploadUserImageView: View {
             // foreground
             ScrollView(.vertical) {
                 VStack {
-                    xmarkButton
+                    XButtonView {
+                        dismiss()
+                    }
                     
                     userUploadPhotoPicker
                     
@@ -46,16 +48,6 @@ struct UploadUserImageView: View {
 
 
 extension UploadUserImageView {
-    
-    private var xmarkButton: some View {
-        Image(systemName: "xmark")
-            .font(.title)
-            .bold()
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .onTapGesture {
-                dismiss()
-            }
-    }
     
     private var userUploadPhotoPicker: some View {
         

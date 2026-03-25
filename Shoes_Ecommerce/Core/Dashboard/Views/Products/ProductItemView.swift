@@ -20,15 +20,7 @@ struct ProductItemView: View {
                              width: 150, height: 150)
                     .clipShape(RoundedRectangle(cornerRadius: 25))
                 
-                Button {
-                    onFavoriteTapped()
-                } label: {
-                    Image(systemName: product.isFavorite ? "heart.fill" : "heart")
-                        .resizable()
-                        .frame(width: 25, height: 25)
-                        .offset(x: -15, y: 15)
-                        .foregroundStyle(product.isFavorite ? .red : .black)
-                }
+                isFavoriteButton
             }
             
             productPriceText(price: product.price)
@@ -49,6 +41,22 @@ struct ProductItemView: View {
     ProductItemView(product: ProductModel(id: "", productName: "", categoryId: "", description: "", images: [], price: 120)) {
         
     }
+}
+
+extension ProductItemView {
+    
+    private var isFavoriteButton: some View {
+        Button {
+            onFavoriteTapped()
+        } label: {
+            Image(systemName: product.isFavorite ? "heart.fill" : "heart")
+                .resizable()
+                .frame(width: 25, height: 25)
+                .offset(x: -15, y: 15)
+                .foregroundStyle(product.isFavorite ? .red : .black)
+        }
+    }
+    
 }
 
 

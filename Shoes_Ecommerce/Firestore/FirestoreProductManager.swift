@@ -52,3 +52,26 @@ class FirestoreProductManager {
     }
     
 }
+
+
+// MARK: SIZES
+extension FirestoreProductManager {
+    
+    func saveSize(productId: String, size: Int, stock: Int) async throws {
+        let query = productDocument(productId: productId).collection("sizes").document()
+        let newSize = ProductSizeModel(id: query.documentID, size: size, stock: stock)
+        try await query.setData(newSize.sizeDict)
+    }
+    
+    func getProductSizesUsingListener(productId: String) -> AnyPublisher<[ProductSizeModel], Never> {
+        let publisher = PassthroughSubject<[ProductSizeModel], Never>()
+        productDocument(productId: productId).collection("sizes").addSnapshotListener { snapshot, error in
+            guard let snapshot, error == nil else { return }
+            var sizes: [ProductSizeModel] = snapshot.getDocuments()
+            sizes.sort(by: {$0.size < $1.size})
+            publisher.send(sizes)
+        }
+        return publisher.eraseToAnyPublisher()
+    }
+    
+}

@@ -8,6 +8,7 @@
 import Foundation
 internal import Combine
 import _PhotosUI_SwiftUI
+import FirebaseAuth
 
 @MainActor
 class DashboardViewModel: ObservableObject {
@@ -38,14 +39,31 @@ class DashboardViewModel: ObservableObject {
         }
     }
     @Published var products: [ProductModel] = []
+    @Published var productSize: String = ""
+    @Published var productSizeStock: String = ""
+    
+    
+    @Published var user: UserModel? = nil
     
     
     
     init() {
         getCategories()
         getProducts()
+        getAuthenticatedUser()
     }
     
+    
+    private func getAuthenticatedUser() {
+        guard let authedUser = Auth.auth().currentUser else {return}
+        Task {
+            do {
+                self.user = try await FirestoreUserManager.shared.getUser(userId: authedUser.uid)
+            } catch {
+                print(error)
+            }
+        }
+    }
     
     
 }
@@ -113,6 +131,19 @@ extension DashboardViewModel {
         }
     }
     
+    
+}
+
+
+
+// MARK: PRODUCT - SIZES
+extension DashboardViewModel {
+    
+    func saveSize(productId: String) async throws {
+        guard let size = Int(productSize),
+              let stock = Int(productSizeStock) else {return}
+        try await FirestoreProductManager.shared.saveSize(productId: productId, size: size, stock: stock)
+    }
     
 }
 

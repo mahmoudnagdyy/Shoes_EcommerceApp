@@ -54,13 +54,9 @@ extension AddCategoryView {
     }
     
     private var xmarkButton: some View {
-        Image(systemName: "xmark")
-            .font(.title)
-            .bold()
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .onTapGesture {
-                dismiss()
-            }
+        XButtonView {
+            dismiss()
+        }
     }
     
     private var categoryUploadPhotoPicker: some View {
@@ -91,12 +87,7 @@ extension AddCategoryView {
     }
     
     private var categoryNameTextField: some View {
-        TextField("category name".capitalized, text: $vm.categoryName)
-            .frame(height: 60)
-            .padding(.horizontal)
-            .background(.white)
-            .clipShape(.capsule)
-            .font(.headline)
+        DashboardTextField(title: "category name", text: $vm.categoryName)
     }
     
     private var createCategoryButton: some View {
