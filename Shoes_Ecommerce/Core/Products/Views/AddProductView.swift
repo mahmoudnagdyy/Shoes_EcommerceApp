@@ -58,8 +58,6 @@ extension AddProductView {
 //                }
                 
                 ZStack {
-                    
-                    
                     if isloading {
                         Capsule()
                             .frame(height: 60)
