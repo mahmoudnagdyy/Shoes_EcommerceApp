@@ -10,6 +10,7 @@ import SwiftUI
 struct ProductsView: View {
     
     @StateObject var vm = ProductViewModel()
+    @StateObject var favVm = FavoritesViewModel()
     @State private var columns: [GridItem] = [
         GridItem(.flexible()),
         GridItem(.flexible())
@@ -53,11 +54,9 @@ extension ProductsView {
             LazyVGrid(columns: columns, spacing: 10) {
                 ForEach(vm.products) { product in
                     NavigationLink {
-                        ProductSatckView(product: product) 
+                        ProductSatckView(product: product, favVm: favVm)
                     } label: {
-                        ProductItemView(product: product) {
-                            vm.makeProductFavorite(product: product)
-                        }
+                        ProductItemView(product: product, favVm: favVm)
                     }
                 }
             }

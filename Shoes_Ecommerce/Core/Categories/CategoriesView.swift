@@ -44,6 +44,7 @@ extension CategoriesView {
                         CategoryItemView(category: category)
                     }
                 }
+                .padding(.bottom, 100)
             }
             .scrollIndicators(.hidden)
             

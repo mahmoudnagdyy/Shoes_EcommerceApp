@@ -23,8 +23,7 @@ struct RootView: View {
                 .fill(Color.yellow)
                 .tabItem(tab: TabModel(title: "cart", iconName: "handbag.fill"), selectedTab: selectedTab)
             
-            Rectangle() 
-                .fill(Color.orange)
+            FavoritesView()
                 .tabItem(tab: TabModel(title: "favorites", iconName: "heart.fill"), selectedTab: selectedTab)
             
             if let user = vm.user,

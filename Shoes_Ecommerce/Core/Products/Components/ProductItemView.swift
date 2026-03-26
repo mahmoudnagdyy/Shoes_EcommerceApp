@@ -10,7 +10,11 @@ import SwiftUI
 struct ProductItemView: View {
     
     let product: ProductModel
-    let onFavoriteTapped: () -> Void
+    @ObservedObject var favVm: FavoritesViewModel
+    
+    private var isFavorite: Bool {
+        favVm.favoriteProducts.contains(where: {$0.id == product.id})
+    }
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -38,22 +42,20 @@ struct ProductItemView: View {
 }
 
 #Preview {
-    ProductItemView(product: ProductModel(id: "", productName: "", categoryId: "", description: "", images: [], price: 120)) {
-        
-    }
+    ProductItemView(product: ProductModel(id: "", productName: "", categoryId: "", description: "", images: [], price: 120), favVm: FavoritesViewModel())
 }
 
 extension ProductItemView {
     
     private var isFavoriteButton: some View {
         Button {
-            onFavoriteTapped()
+            favVm.addFavoriteProduct(product: product)
         } label: {
-            Image(systemName: product.isFavorite ? "heart.fill" : "heart")
+            Image(systemName: isFavorite ? "heart.fill" : "heart")
                 .resizable()
                 .frame(width: 25, height: 25)
                 .offset(x: -15, y: 15)
-                .foregroundStyle(product.isFavorite ? .red : .black)
+                .foregroundStyle(isFavorite ? .red : .black)
         }
     }
     

@@ -8,12 +8,26 @@
 
 /* Begin PBXBuildFile section */
 		B664AAE52F70871F00EF5637 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = B664AAE42F70871F00EF5637 /* SDWebImageSwiftUI */; };
+		B680DC102F74BD080018DA6A /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = B680DC0F2F74BD080018DA6A /* Lottie */; };
 		B68617BE2F6F09A400A05976 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B68617BD2F6F09A400A05976 /* FirebaseAnalytics */; };
 		B68617C02F6F09A400A05976 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B68617BF2F6F09A400A05976 /* FirebaseAuth */; };
 		B68617C22F6F09A400A05976 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = B68617C12F6F09A400A05976 /* FirebaseFirestore */; };
 		B68617C52F6F0A0900A05976 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = B68617C42F6F0A0900A05976 /* GoogleSignIn */; };
 		B68617C72F6F0A0900A05976 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B68617C62F6F0A0900A05976 /* GoogleSignInSwift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B680DC162F74BE6A0018DA6A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		B66390682F6E11C700852DE7 /* Shoes_Ecommerce.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shoes_Ecommerce.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -33,6 +47,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B664AAE52F70871F00EF5637 /* SDWebImageSwiftUI in Frameworks */,
+				B680DC102F74BD080018DA6A /* Lottie in Frameworks */,
 				B68617C72F6F0A0900A05976 /* GoogleSignInSwift in Frameworks */,
 				B68617BE2F6F09A400A05976 /* FirebaseAnalytics in Frameworks */,
 				B68617C52F6F0A0900A05976 /* GoogleSignIn in Frameworks */,
@@ -70,6 +85,7 @@
 				B66390642F6E11C700852DE7 /* Sources */,
 				B66390652F6E11C700852DE7 /* Frameworks */,
 				B66390662F6E11C700852DE7 /* Resources */,
+				B680DC162F74BE6A0018DA6A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -86,6 +102,7 @@
 				B68617C42F6F0A0900A05976 /* GoogleSignIn */,
 				B68617C62F6F0A0900A05976 /* GoogleSignInSwift */,
 				B664AAE42F70871F00EF5637 /* SDWebImageSwiftUI */,
+				B680DC0F2F74BD080018DA6A /* Lottie */,
 			);
 			productName = Shoes_Ecommerce;
 			productReference = B66390682F6E11C700852DE7 /* Shoes_Ecommerce.app */;
@@ -119,6 +136,7 @@
 				B68617BC2F6F09A400A05976 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				B68617C32F6F0A0900A05976 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				B664AAE32F70871F00EF5637 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				B680DC0E2F74BD080018DA6A /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B66390692F6E11C700852DE7 /* Products */;
@@ -370,6 +388,14 @@
 				minimumVersion = 3.1.4;
 			};
 		};
+		B680DC0E2F74BD080018DA6A /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.6.0;
+			};
+		};
 		B68617BC2F6F09A400A05976 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -393,6 +419,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B664AAE32F70871F00EF5637 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
 			productName = SDWebImageSwiftUI;
+		};
+		B680DC0F2F74BD080018DA6A /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B680DC0E2F74BD080018DA6A /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 		B68617BD2F6F09A400A05976 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;

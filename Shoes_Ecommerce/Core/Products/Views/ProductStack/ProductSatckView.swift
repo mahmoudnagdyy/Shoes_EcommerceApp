@@ -10,13 +10,18 @@ import SwiftUI
 struct ProductSatckView: View {
     
     @StateObject var vm: ProductStackViewModel
+    @ObservedObject var favVM: FavoritesViewModel
     let product: ProductModel
     @State var showAddSize: Bool = false
     
+    private var isFavorite: Bool {
+        return favVM.favoriteProducts.contains(where: { $0.id == product.id })
+    }
     
-    init(product: ProductModel) {
+    init(product: ProductModel, favVm: FavoritesViewModel) {
         _vm = StateObject(wrappedValue: ProductStackViewModel(product: product))
         self.product = product
+        self.favVM = favVm
     }
     
     
@@ -31,6 +36,17 @@ struct ProductSatckView: View {
         .navigationTitle("details".capitalized)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
+            if let user = vm.user,
+               user.role == UserType.admin.rawValue {
+                ToolbarItem(placement: .topBarLeading) {
+                    editProductButton
+                }
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    deleteProductButton
+                }
+            }
+            
             ToolbarItem(placement: .topBarTrailing) {
                 isFavoriteButton
             }
@@ -48,7 +64,7 @@ struct ProductSatckView: View {
         price: 120
     )
     NavigationStack {
-        ProductSatckView(product: productPrev)
+        ProductSatckView(product: productPrev, favVm: FavoritesViewModel())
     }
 }
 
@@ -67,10 +83,10 @@ extension ProductSatckView {
                         Text("select size".capitalized)
                             .font(.headline)
                         Spacer()
-//                        if let user = dbVM.user,
-//                           user.role == UserType.admin.rawValue {
+                        if let user = vm.user,
+                           user.role == UserType.admin.rawValue {
                             addSizeButton
-//                        }
+                        }
                     }
                     .padding(.top)
                     
@@ -113,12 +129,27 @@ extension ProductSatckView {
     
     private var isFavoriteButton: some View {
         Button {
-            vm.makeProductFavorite(product: product)
+            vm.addFavoriteProduct(product: product)
         } label: {
-            Image(systemName: product.isFavorite ? "heart.fill" : "heart")
+            Image(systemName: isFavorite ? "heart.fill" : "heart")
                 .resizable()
-                .frame(width: 20, height: 20)
-                .foregroundStyle(product.isFavorite ? .red : .black)
+                .foregroundStyle(isFavorite ? .red : .black)
+        }
+    }
+    
+    private var deleteProductButton: some View {
+        Button {
+            // action
+        } label: {
+            Image(systemName: "trash.fill")
+        }
+    }
+    
+    private var editProductButton: some View {
+        Button {
+            // action
+        } label: {
+            Image(systemName: "pencil")
         }
     }
     

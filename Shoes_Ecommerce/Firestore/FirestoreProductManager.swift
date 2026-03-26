@@ -45,10 +45,8 @@ class FirestoreProductManager {
         return publisher.eraseToAnyPublisher()
     }
     
-    func makeProductFavorite(productId: String, isFavorite: Bool) async throws {
-        try await productDocument(productId: productId).updateData([
-            ProductModel.CodingKeys.isFavorite.rawValue : !isFavorite
-        ])
+    func getProduct(productId: String) async throws -> ProductModel {
+        try await productDocument(productId: productId).getDocument(as: ProductModel.self)
     }
     
 }

@@ -15,7 +15,6 @@ struct ProductModel: Codable, Identifiable, Hashable {
     let description: String
     let images: [ImageModel]
     let price: Double
-    var isFavorite: Bool = false
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -24,7 +23,6 @@ struct ProductModel: Codable, Identifiable, Hashable {
         case description
         case images
         case price
-        case isFavorite = "is_favorite"
     }
     
     var productDict: [String: Any] {
@@ -40,7 +38,6 @@ struct ProductModel: Codable, Identifiable, Hashable {
                     "secure_url": image.secureUrl
                 ]
             }),
-            ProductModel.CodingKeys.isFavorite.rawValue: isFavorite
         ]
     }
 }

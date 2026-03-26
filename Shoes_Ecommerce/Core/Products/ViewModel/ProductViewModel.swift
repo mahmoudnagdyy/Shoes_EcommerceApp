@@ -35,26 +35,12 @@ class ProductViewModel: ObservableObject {
     
     
     init() {
+        getAuthenticatedUser()
         addSubscribers()
     }
     
     
-    func createProduct() async throws {
-        guard !productName.isEmpty,
-              !productDescription.isEmpty,
-              let productImages,
-              let productCategory,
-              let productPrice = Double(productPrice) else {return}
-        let returnedImages = try await ProductService.shared.uploadImages(images: productImages)
-        try await FirestoreProductManager.shared.createProduct(
-            productName: productName,
-            categoryId: productCategory.id,
-            productDescription: productDescription,
-            productPrice: productPrice,
-            images: returnedImages)
-    }
-    
-    func addSubscribers() {
+    private func addSubscribers() {
         FirestoreProductManager.shared.getProductsUsingListener()
             .sink { [weak self] returnedProducts in
                 self?.products = returnedProducts
@@ -72,16 +58,20 @@ class ProductViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-    func makeProductFavorite(product: ProductModel) {
-        Task {
-            do {
-                try await FirestoreProductManager
-                    .shared
-                    .makeProductFavorite(productId: product.id, isFavorite: product.isFavorite)
-            } catch {
-                print(error)
-            }
-        }
+    
+    func createProduct() async throws {
+        guard !productName.isEmpty,
+              !productDescription.isEmpty,
+              let productImages,
+              let productCategory,
+              let productPrice = Double(productPrice) else {return}
+        let returnedImages = try await ProductService.shared.uploadImages(images: productImages)
+        try await FirestoreProductManager.shared.createProduct(
+            productName: productName,
+            categoryId: productCategory.id,
+            productDescription: productDescription,
+            productPrice: productPrice,
+            images: returnedImages)
     }
     
     private func getAuthenticatedUser() {

@@ -41,11 +41,26 @@ extension AddCategoryView {
                 
                 categoryNameTextField
                 
-                createCategoryButton
+//                createCategoryButton
+//                
+//                if isloading {
+//                    ProgressView()
+//                        .tint(.black)
+//                }
                 
-                if isloading {
-                    ProgressView()
-                        .tint(.black)
+                ZStack {
+                    if isloading {
+                        Capsule()
+                            .fill(.black)
+                            .frame(height: 70)
+                            .overlay {
+                                LottieView(name: "loading_hand")
+                                    .frame(width: 200, height: 200)
+                            }
+                            .padding(.vertical, 10)
+                    } else{
+                        createCategoryButton
+                    }
                 }
                 
             }
