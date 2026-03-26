@@ -98,7 +98,7 @@ extension LoginView {
     }
     
     private var loginSubmitButton: some View {
-        SubmitButton(text: "log in", bgColor: .black) {
+        SubmitButton(text: "log in", bgColor: .black, fgColor: .white) {
             loginSubmitButtonFunction()
         }
     }

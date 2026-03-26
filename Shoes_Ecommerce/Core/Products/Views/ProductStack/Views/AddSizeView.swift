@@ -52,7 +52,7 @@ extension AddSizeView {
                 DashboardTextField(title: "stock", text: $vm.productSizeStock)
                     .keyboardType(.numberPad)
                 
-                SubmitButton(text: "save size", bgColor: .black) {
+                SubmitButton(text: "save size", bgColor: .black, fgColor: .white) {
                     addSizeButtonFunction()
                 }
                 

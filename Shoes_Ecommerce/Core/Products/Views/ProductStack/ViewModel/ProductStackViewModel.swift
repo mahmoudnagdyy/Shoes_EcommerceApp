@@ -79,3 +79,20 @@ class ProductStackViewModel: ObservableObject {
     }
     
 }
+
+
+
+extension ProductStackViewModel {
+    
+    func addItemToCart(product: ProductModel) {
+        guard let authedUser = Auth.auth().currentUser, let selectedSize else { return }
+        Task {
+            do {
+                try await FirestoreCartManager.shared.addItemToCart(userId: authedUser.uid, productId: product.id, sizeId: selectedSize.id)
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+}

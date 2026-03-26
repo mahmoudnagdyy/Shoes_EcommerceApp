@@ -18,19 +18,16 @@ struct RootView: View {
         TabViewContainer(selectedTab: $selectedTab) {
             HomeView()
                 .tabItem(tab: TabModel(title: "home", iconName: "house.fill"), selectedTab: selectedTab)
-            
-            Rectangle()
-                .fill(Color.yellow)
-                .tabItem(tab: TabModel(title: "cart", iconName: "handbag.fill"), selectedTab: selectedTab)
+                
             
             FavoritesView()
                 .tabItem(tab: TabModel(title: "favorites", iconName: "heart.fill"), selectedTab: selectedTab)
             
-            if let user = vm.user,
-               user.role == "admin" {
-                DashboardView()
-                    .tabItem(tab: TabModel(title: "dashboard", iconName: "square.grid.2x2"), selectedTab: selectedTab)
-            }
+            CartView()
+                .tabItem(tab: TabModel(title: "cart", iconName: "handbag.fill"), selectedTab: selectedTab)
+            
+            OrdersView()
+                .tabItem(tab: TabModel(title: "orders", iconName: "shippingbox.fill"), selectedTab: selectedTab)
             
             ProfileView(onLogoutButtonPressed: {
                 onLogoutButtonPressed()

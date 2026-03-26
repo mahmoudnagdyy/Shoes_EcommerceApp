@@ -143,7 +143,7 @@ extension AddProductView {
     }
     
     private var createProductButton: some View {
-        SubmitButton(text: "create product", bgColor: .black) {
+        SubmitButton(text: "create product", bgColor: .black, fgColor: .white) {
             createProductButtonFunction()
         }
         .disabled(isloading)

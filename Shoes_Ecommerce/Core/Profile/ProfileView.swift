@@ -11,6 +11,7 @@ struct ProfileView: View {
     
     @StateObject var vm = ProfileViewModel()
     let onLogoutButtonPressed: () -> Void
+    @State var showDashboard: Bool = false
     
     var body: some View {
         ZStack {
@@ -52,6 +53,17 @@ extension ProfileView {
                 displayUserName()
                 
                 ProfileItemView(text: vm.user?.email ?? "no email", iconName: "envelope.fill")
+                
+                if let user = vm.user, user.role == UserType.admin.rawValue {
+                    ProfileItemView(text: "dashboard".capitalized, iconName:"square.grid.2x2")
+                        .onTapGesture {
+                            showDashboard.toggle()
+                        }
+                        .fullScreenCover(isPresented: $showDashboard) {
+                            DashboardView()
+                        }
+                }
+                
             }
             .padding()
             .fullScreenCover(isPresented: $vm.showChangeImageCover) {

@@ -12,15 +12,15 @@ import SwiftUI
 struct SubmitButtonViewModifier: ViewModifier {
     
     let bgColor: Color
+    let fgColor: Color
     
     func body(content: Content) -> some View {
         content
             .frame(maxWidth: .infinity)
             .frame(height: 60)
             .background(bgColor)
-            .foregroundStyle(.white)
             .clipShape(.capsule)
-            .foregroundStyle(.white)
+            .foregroundStyle(fgColor)
             .font(.title3)
             .bold()
             .padding(.vertical)

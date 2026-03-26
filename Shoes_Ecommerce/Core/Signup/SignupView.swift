@@ -107,7 +107,7 @@ extension SignupView {
     }
     
     private var signupSubmitButton: some View {
-        SubmitButton(text: "create account", bgColor: .black) {
+        SubmitButton(text: "create account", bgColor: .black, fgColor: .white) {
             signupSubmitButtonFunction()
         }
     }

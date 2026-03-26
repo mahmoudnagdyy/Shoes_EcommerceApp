@@ -11,6 +11,7 @@ struct SubmitButton: View {
     
     let text: String
     let bgColor: Color
+    let fgColor: Color
     let action: () -> ()
     
     var body: some View {
@@ -18,13 +19,13 @@ struct SubmitButton: View {
             action()
         } label: {
             Text(text.capitalized)
-                .asSubmitButton(bgColor: bgColor)
+                .asSubmitButton(bgColor: bgColor, fgColor: fgColor)
         }
     }
 }
 
 #Preview {
-    SubmitButton(text: "submit", bgColor: .red) {
+    SubmitButton(text: "submit", bgColor: .red, fgColor: .white) {
         
     }
 }

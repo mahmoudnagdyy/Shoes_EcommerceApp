@@ -19,8 +19,8 @@ extension View {
         modifier(NameTextFieldViewModifier(type: type))
     }
     
-    func asSubmitButton(bgColor: Color) -> some View {
-        modifier(SubmitButtonViewModifier(bgColor: bgColor))
+    func asSubmitButton(bgColor: Color, fgColor: Color) -> some View {
+        modifier(SubmitButtonViewModifier(bgColor: bgColor, fgColor: fgColor))
     }
     
     func tabItem(tab: TabModel, selectedTab: TabModel) -> some View {

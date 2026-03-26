@@ -201,8 +201,8 @@ extension ProductSatckView {
     }
     
     private var addToCartButton: some View {
-        SubmitButton(text: "add to cart", bgColor: .black) {
-            // action
+        SubmitButton(text: "add to cart", bgColor: .black, fgColor: .white) {
+            vm.addItemToCart(product: product)
         }
         .disabled(vm.selectedSize?.stock == 0 ? true : false)
         .opacity(vm.selectedSize?.stock == 0 ? 0.4 : 1)

@@ -106,7 +106,7 @@ extension AddCategoryView {
     }
     
     private var createCategoryButton: some View {
-        SubmitButton(text: "create category", bgColor: .black) {
+        SubmitButton(text: "create category", bgColor: .black, fgColor: .white) {
             Task {
                 do {
                     isloading = true

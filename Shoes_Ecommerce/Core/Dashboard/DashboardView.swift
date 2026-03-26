@@ -10,6 +10,7 @@ import SwiftUI
 struct DashboardView: View {
     
     @StateObject var vm = DashboardViewModel()
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         ZStack {
@@ -47,6 +48,17 @@ struct DashboardView: View {
 
                 }
                 .navigationTitle("dashboard".capitalized)
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button {
+                            dismiss()
+                        } label: {
+                            Image(systemName: "xmark")
+                                .font(.headline)
+                        }
+
+                    }
+                }
             }
         }
     }

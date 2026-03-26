@@ -80,7 +80,7 @@ extension UploadUserImageView {
     }
     
     private var UploadPhotoButton: some View {
-        SubmitButton(text: "save", bgColor: .black) {
+        SubmitButton(text: "save", bgColor: .black, fgColor: .white) {
             uploadImageButtonFunction()
         }
         .disabled(vm.isLoading)

@@ -15,6 +15,8 @@ class RootViewModel: ObservableObject {
     
     @Published var user: UserModel?
     
+    private var cancellables = Set<AnyCancellable>()
+    
     init() {
         getAuthenticatedUser()
     }

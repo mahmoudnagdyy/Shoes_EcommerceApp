@@ -72,4 +72,8 @@ extension FirestoreProductManager {
         return publisher.eraseToAnyPublisher()
     }
     
+    func getSize(productId: String, sizeId: String) async throws -> ProductSizeModel {
+        try await productDocument(productId: productId).collection("sizes").document(sizeId).getDocument(as: ProductSizeModel.self)
+    }
+    
 }
