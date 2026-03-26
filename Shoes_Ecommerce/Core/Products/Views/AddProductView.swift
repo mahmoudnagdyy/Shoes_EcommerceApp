@@ -50,11 +50,27 @@ extension AddProductView {
                 descriptionTextLabel
                 productDescriptionTextEditor
                 
-                createProductButton
+//                createProductButton
+//                
+//                if isloading {
+//                    ProgressView()
+//                        .tint(.black)
+//                }
                 
-                if isloading {
-                    ProgressView()
-                        .tint(.black)
+                ZStack {
+                    
+                    
+                    if isloading {
+                        Capsule()
+                            .frame(height: 60)
+                            .overlay {
+                                LottieView(name: "loading_hand2")
+                                    .frame(width: 60)
+                            }
+                            .padding(.vertical, 10)
+                    } else{
+                        createProductButton
+                    }
                 }
                 
             }
