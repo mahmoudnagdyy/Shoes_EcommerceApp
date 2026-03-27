@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseCore
 
 
 struct CategoryModel: Codable, Identifiable, Hashable {
@@ -13,11 +14,13 @@ struct CategoryModel: Codable, Identifiable, Hashable {
     let id: String
     let categoryName: String
     let image: ImageModel
+    let createdAt: Timestamp = Timestamp()
     
     enum CodingKeys: String, CodingKey {
         case id
         case categoryName = "category_name"
         case image
+        case createdAt = "created_at"
     }
     
     var categoryDict: [String: Any] {
@@ -27,7 +30,8 @@ struct CategoryModel: Codable, Identifiable, Hashable {
             CategoryModel.CodingKeys.image.rawValue: [
                 "public_id": image.publicId,
                 "secure_url": image.secureUrl
-            ]
+            ],
+            CategoryModel.CodingKeys.createdAt.rawValue: createdAt
         ]
     }
     

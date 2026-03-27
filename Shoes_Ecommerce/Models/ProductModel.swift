@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseCore
 
 
 struct ProductModel: Codable, Identifiable, Hashable {
@@ -15,6 +16,7 @@ struct ProductModel: Codable, Identifiable, Hashable {
     let description: String
     let images: [ImageModel]
     let price: Double
+    let createdAt: Timestamp = Timestamp()
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -23,6 +25,7 @@ struct ProductModel: Codable, Identifiable, Hashable {
         case description
         case images
         case price
+        case createdAt = "created_at"
     }
     
     var productDict: [String: Any] {
@@ -38,6 +41,7 @@ struct ProductModel: Codable, Identifiable, Hashable {
                     "secure_url": image.secureUrl
                 ]
             }),
+            ProductModel.CodingKeys.createdAt.rawValue: createdAt
         ]
     }
 }

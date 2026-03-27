@@ -40,7 +40,7 @@ class FirestoreCartManager {
     
     func getCartItemsUsingListener(userId: String) -> AnyPublisher<[CartItemModel], Never> {
         let publisher = PassthroughSubject<[CartItemModel], Never>()
-        cartDocument(userId: userId).collection("products").addSnapshotListener { snapshot, error in
+        cartDocument(userId: userId).collection("products").order(by: "created_at").addSnapshotListener { snapshot, error in
             guard let snapshot, error == nil else { return }
             let items: [CartModel] = snapshot.getDocuments()
             Task {

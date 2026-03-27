@@ -28,7 +28,7 @@ class FirestoreCategoryManager {
     
     func getCategoriesUsingLisitner() -> AnyPublisher<[CategoryModel], Never> {
         let publisher = PassthroughSubject<[CategoryModel], Never>()
-        categoriesCollection.addSnapshotListener { snapshot, error in
+        categoriesCollection.order(by: "created_at").addSnapshotListener { snapshot, error in
             guard let snapshot, error == nil else { return }
             let categories: [CategoryModel] = snapshot.getDocuments()
             publisher.send(categories)

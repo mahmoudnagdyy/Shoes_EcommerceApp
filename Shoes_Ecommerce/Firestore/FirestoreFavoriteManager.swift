@@ -35,20 +35,21 @@ class FirestoreFavoriteManager {
             try await productDoc.delete()
         } else{
             try await favoriteDocument(userId: authedUser.uid).setData(["userId": authedUser.uid])
-            try await favoriteProductsCollection(userId: authedUser.uid).document(productId).setData(["product_id": productId])
+            let favItem = FavoriteModel(productId: productId)
+            try await favoriteProductsCollection(userId: authedUser.uid).document(productId).setData(favItem.favDict)
         }
     }
     
     func getFavoriteProductsUsingListiner(userId: String) -> AnyPublisher<[ProductModel], Never> {
         let publisher = PassthroughSubject<[ProductModel], Never>()
-        favoriteProductsCollection(userId: userId).addSnapshotListener { snapshot, error in
+        favoriteProductsCollection(userId: userId).order(by: "created_at").addSnapshotListener { snapshot, error in
             guard let snapshot, error == nil else {return}
             let favs: [FavoriteModel] = snapshot.getDocuments()
             var products: [ProductModel] = []
             Task {
                 do {
                     for fav in favs {
-                        let product = try await FirestoreProductManager.shared.getProduct(productId: fav.product_id)
+                        let product = try await FirestoreProductManager.shared.getProduct(productId: fav.productId)
                         products.append(product)
                     }
                     publisher.send(products)

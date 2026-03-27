@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseCore
 
 
 
@@ -14,12 +15,14 @@ struct CartModel: Codable, Identifiable {
     let productId: String
     let sizeId: String
     let quantity: Int
+    let createdAt: Timestamp = Timestamp()
     
     enum CodingKeys: String, CodingKey {
         case id
         case productId = "product_id"
         case sizeId = "size_id"
         case quantity
+        case createdAt = "created_at"
     }
     
     var cartDic: [String: Any] {
@@ -28,6 +31,7 @@ struct CartModel: Codable, Identifiable {
             CartModel.CodingKeys.productId.rawValue: productId,
             CartModel.CodingKeys.sizeId.rawValue: sizeId,
             CartModel.CodingKeys.quantity.rawValue: quantity,
+            CartModel.CodingKeys.createdAt.rawValue: createdAt
         ]
     }
 }

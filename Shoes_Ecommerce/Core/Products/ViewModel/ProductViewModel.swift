@@ -10,6 +10,7 @@ internal import Combine
 import SwiftUI
 import PhotosUI
 import FirebaseAuth
+import FirebaseFirestore
 
 
 @MainActor
@@ -30,6 +31,8 @@ class ProductViewModel: ObservableObject {
     @Published var productSize: String = ""
     @Published var productSizeStock: String = ""
     @Published var categories: [CategoryModel] = []
+    private var lastDocument: DocumentSnapshot?
+    @Published var hasMore: Bool = true
     
     @Published var user: UserModel? = nil
     
@@ -37,15 +40,16 @@ class ProductViewModel: ObservableObject {
     init() {
         getAuthenticatedUser()
         addSubscribers()
+        getProductsWithPagination()
     }
     
     
     private func addSubscribers() {
-        FirestoreProductManager.shared.getProductsUsingListener()
-            .sink { [weak self] returnedProducts in
-                self?.products = returnedProducts
-            }
-            .store(in: &cancellables)
+//        FirestoreProductManager.shared.getProductsUsingListener()
+//            .sink { [weak self] returnedProducts in
+//                self?.products = returnedProducts
+//            }
+//            .store(in: &cancellables)
         
         FirestoreCategoryManager.shared.getCategoriesUsingLisitner()
             .sink { [weak self] returnedCategories in
@@ -72,6 +76,19 @@ class ProductViewModel: ObservableObject {
             productDescription: productDescription,
             productPrice: productPrice,
             images: returnedImages)
+    }
+    
+    func getProductsWithPagination() {
+        Task {
+            do {
+                let result = try await FirestoreProductManager.shared.getProductWithPagination(limit: 10, lastDocument: lastDocument)
+                self.lastDocument = result.lastDocument
+                self.products.append(contentsOf: result.products)
+                self.hasMore = result.hasMore
+            } catch {
+                print(error)
+            }
+        }
     }
     
     private func getAuthenticatedUser() {

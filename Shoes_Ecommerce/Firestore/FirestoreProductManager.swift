@@ -37,7 +37,10 @@ class FirestoreProductManager {
     
     func getProductsUsingListener() -> AnyPublisher<[ProductModel], Never> {
         let publisher = PassthroughSubject<[ProductModel], Never>()
-        productsCollection.addSnapshotListener { snapshot, error in
+        
+        let query = productsCollection.order(by: "created_at")
+        
+        query.addSnapshotListener { snapshot, error in
             guard let snapshot, error == nil else {return}
             let products: [ProductModel] = snapshot.getDocuments()
             publisher.send(products)
@@ -47,6 +50,22 @@ class FirestoreProductManager {
     
     func getProduct(productId: String) async throws -> ProductModel {
         try await productDocument(productId: productId).getDocument(as: ProductModel.self)
+    }
+    
+    func getProductWithPagination(limit: Int, lastDocument: DocumentSnapshot?) async throws  -> (products: [ProductModel], lastDocument: DocumentSnapshot?, hasMore: Bool) {
+        var query = productsCollection.order(by: "created_at").limit(to: limit)
+        
+        if let lastDocument {
+            query = query.start(afterDocument: lastDocument)
+        }
+        
+        let snapshot = try await query.getDocuments()
+        let products: [ProductModel] = snapshot.getDocuments()
+        
+        let newLastDocument = snapshot.documents.last
+        let hasMore = snapshot.documents.count == limit
+                
+        return (products, newLastDocument, hasMore)
     }
     
 }
@@ -63,10 +82,9 @@ extension FirestoreProductManager {
     
     func getProductSizesUsingListener(productId: String) -> AnyPublisher<[ProductSizeModel], Never> {
         let publisher = PassthroughSubject<[ProductSizeModel], Never>()
-        productDocument(productId: productId).collection("sizes").addSnapshotListener { snapshot, error in
+        productDocument(productId: productId).collection("sizes").order(by: "size").addSnapshotListener { snapshot, error in
             guard let snapshot, error == nil else { return }
-            var sizes: [ProductSizeModel] = snapshot.getDocuments()
-            sizes.sort(by: {$0.size < $1.size})
+            let sizes: [ProductSizeModel] = snapshot.getDocuments()
             publisher.send(sizes)
         }
         return publisher.eraseToAnyPublisher()

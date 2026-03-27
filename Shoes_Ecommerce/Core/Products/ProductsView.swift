@@ -57,6 +57,13 @@ extension ProductsView {
                         ProductSatckView(product: product, favVm: favVm)
                     } label: {
                         ProductItemView(product: product, favVm: favVm)
+                            .onAppear {
+                                if product.id == vm.products.last?.id {
+                                    if vm.hasMore {
+                                        vm.getProductsWithPagination()
+                                    }
+                                }
+                            }
                     }
                 }
             }
