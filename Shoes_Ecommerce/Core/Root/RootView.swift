@@ -26,9 +26,6 @@ struct RootView: View {
             CartView()
                 .tabItem(tab: TabModel(title: "cart", iconName: "handbag.fill"), selectedTab: selectedTab)
             
-            OrdersView()
-                .tabItem(tab: TabModel(title: "orders", iconName: "shippingbox.fill"), selectedTab: selectedTab)
-            
             ProfileView(onLogoutButtonPressed: {
                 onLogoutButtonPressed()
             })
