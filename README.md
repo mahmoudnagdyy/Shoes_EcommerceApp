@@ -112,7 +112,8 @@ This app uses a `Node.js` backend integrated with **Cloudinary** to handle image
 <p align="center">
   <img src="https://raw.githubusercontent.com/mahmoudnagdyy/Shoes_EcommerceApp/main/Shoes_Ecommerce/projectImages/products_img.png" width="300"/><br/>
   <sub>
-    This screen manages products data, is displays all products and button to display a view that add new products
+    This screen manages products data, is displays all products and button to display a view that add new products,
+    I used pagination when getting products here.
   </sub>
 </p>
 
