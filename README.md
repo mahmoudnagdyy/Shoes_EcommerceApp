@@ -13,6 +13,8 @@
 ## 📸 Image Handling
 This app uses a `Node.js` backend integrated with **Cloudinary** to handle image uploads efficiently, ensuring fast delivery and optimized storage.
 
+<h3>
+⚙️ This project uses Dependency Injection to manage dependencies and improve code modularity.</h3>
 <p align="center">
   <a href="https://github.com/mahmoudnagdyy/shoes_ecommerce_server" target="_blank">
     <img src="https://img.shields.io/badge/GitHub-Repo-blue?logo=github&logoColor=white" alt="GitHub Repo"/>
