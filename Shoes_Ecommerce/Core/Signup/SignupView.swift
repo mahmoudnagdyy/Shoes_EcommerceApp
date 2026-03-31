@@ -9,10 +9,15 @@ import SwiftUI
 
 struct SignupView: View {
     
-    @StateObject var vm = SignupViewModel()
-    
+    @StateObject var vm: SignupViewModel
     let onLoginLinkPressed: () -> Void
     let onSignupButtonPressed: () -> Void
+    
+    init(onLoginLinkPressed: @escaping () -> Void, onSignupButtonPressed: @escaping () -> Void) {
+        _vm = StateObject(wrappedValue: SignupAuthHelper.makeSignupView())
+        self.onLoginLinkPressed = onLoginLinkPressed
+        self.onSignupButtonPressed = onSignupButtonPressed
+    }
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -129,7 +134,8 @@ extension SignupView {
         GoogleSignInButton {
             Task {
                 do {
-                    try await AuthenticationManager.shared.signInWithGoogle()
+                    try await vm.signInWithGoogle()
+                    UserDefaults.standard.set(true, forKey: "isLoggedIn")
                     onSignupButtonPressed()
                 } catch {
                     print(error)
@@ -147,13 +153,8 @@ extension SignupView {
     private func signupSubmitButtonFunction() {
         Task {
             do {
-                try await AuthenticationManager.shared
-                    .signUpWithEmailAndPassword(firstName: vm.firstName, lastName: vm.lastName, email: vm.email, password: vm.password)
-                vm.firstName = ""
-                vm.email = ""
-                vm.lastName = ""
-                vm.password = ""
-                vm.signupError = nil
+                try await vm.signupWithEmailAndPassword(firstName: vm.firstName, lastName: vm.lastName, email: vm.email, password: vm.password)
+                UserDefaults.standard.set(true, forKey: "isLoggedIn")
                 onSignupButtonPressed()
             } catch {
                 if vm.password.count < 6 {
@@ -165,6 +166,19 @@ extension SignupView {
                 print(error)
             }
         }
+    }
+    
+}
+
+
+
+struct SignupAuthHelper {
+    
+    static func makeSignupView() -> SignupViewModel {
+        let googleService: GoogleSignInServiceProtocol = SignInWithGoogleHelper()
+        let firestoreUserManager: FirestoreUserProtocol = FirestoreUserManager()
+        let authManager: AutheServiceProtocol = AuthenticationManager(googleService: googleService, firestoreUserManager: firestoreUserManager)
+        return SignupViewModel(authManager: authManager)
     }
     
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CartView: View {
     
-    @StateObject var vm = CartViewModel()
+    @StateObject var vm = CartViewModel(firestoreCartManager: FirestoreCartManager())
     
     var body: some View {
         NavigationStack {

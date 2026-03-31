@@ -10,13 +10,12 @@ import FirebaseAuth
 import FirebaseFirestore
 internal import Combine
 
-class FirestoreFavoriteManager {
+class FirestoreFavoriteManager: FirestoreFavoriteProtocol {
     
-    static let shared = FirestoreFavoriteManager()
     private let favoritesCollection = Firestore.firestore().collection("favorites")
     
-    private init() {}
-    
+    let firestoreProductsManager: FirestoreProductProtocol = FirestoreProductManager()
+
     private func favoriteDocument(userId: String) -> DocumentReference {
         favoritesCollection.document(userId)
     }
@@ -49,7 +48,7 @@ class FirestoreFavoriteManager {
             Task {
                 do {
                     for fav in favs {
-                        let product = try await FirestoreProductManager.shared.getProduct(productId: fav.productId)
+                        let product = try await self.firestoreProductsManager.getProduct(productId: fav.productId)
                         products.append(product)
                     }
                     publisher.send(products)

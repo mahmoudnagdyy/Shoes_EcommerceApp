@@ -13,14 +13,17 @@ class FavoriteItemViewModel: ObservableObject {
     
     @Published var productCategory: CategoryModel?
     
-    init(categoryId: String) {
+    let firestoreCategoryManager: FirestoreCategoryProtocol
+    
+    init(categoryId: String, firestoreCategoryManager: FirestoreCategoryProtocol) {
+        self.firestoreCategoryManager = firestoreCategoryManager
         getProductCategory(categoryId: categoryId)
     }
     
     private func getProductCategory(categoryId: String) {
         Task {
             do {
-                self.productCategory = try await FirestoreCategoryManager.shared.getCategory(categoryId: categoryId)
+                self.productCategory = try await firestoreCategoryManager.getCategory(categoryId: categoryId)
             } catch {
                 print(error)
             }
@@ -44,7 +47,7 @@ struct FavoriteItemView: View {
     init(product: ProductModel, favVm: FavoritesViewModel) {
         self.product = product
         self.favVm = favVm
-        _itemVm = StateObject(wrappedValue: FavoriteItemViewModel(categoryId: product.categoryId))
+        _itemVm = StateObject(wrappedValue: FavoriteItemViewModel(categoryId: product.categoryId, firestoreCategoryManager: FirestoreCategoryManager()))
     }
     
     var body: some View {

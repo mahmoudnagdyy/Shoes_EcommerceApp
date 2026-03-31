@@ -54,7 +54,7 @@ struct CartItemView: View {
                               description: "",images: [], price: 0),
         size: ProductSizeModel(id: "", size: 0, stock: 0),
         quantity: 0)
-    CartItemView(cartItem: cartItem, vm: CartViewModel())
+    CartItemView(cartItem: cartItem, vm: CartViewModel(firestoreCartManager: FirestoreCartManager()))
 }
 
 

@@ -10,13 +10,10 @@ import FirebaseFirestore
 internal import Combine
 
 
-class FirestoreProductManager {
+class FirestoreProductManager: FirestoreProductProtocol {
     
-    static let shared = FirestoreProductManager()
     private let productsCollection = Firestore.firestore().collection("products")
-    
-    private init() {}
-    
+        
     private func productDocument(productId: String) -> DocumentReference {
         productsCollection.document(productId)
     }

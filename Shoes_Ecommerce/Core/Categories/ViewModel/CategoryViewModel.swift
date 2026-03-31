@@ -23,8 +23,13 @@ class CategoryViewModel: ObservableObject {
     @Published var categories: [CategoryModel] = []
     var cancellables = Set<AnyCancellable>()
     
+    let firestoreCategoryManager: FirestoreCategoryProtocol
     
-    init() {
+    
+    init(
+        firestoreCategoryManager: FirestoreCategoryProtocol
+    ) {
+        self.firestoreCategoryManager = firestoreCategoryManager
         getCategories()
     }
     
@@ -32,11 +37,11 @@ class CategoryViewModel: ObservableObject {
     func createCategory() async throws {
         guard let Categoryimage, !categoryName.isEmpty else {return}
         let returnedImage = try await CategoryService.shared.uploadCategoryPhoto(categoryName: categoryName, image: Categoryimage)
-        try await FirestoreCategoryManager.shared.createCategory(categoryName: categoryName, categoryImage: returnedImage)
+        try await firestoreCategoryManager.createCategory(categoryName: categoryName, categoryImage: returnedImage)
     }
     
     func getCategories() {
-        FirestoreCategoryManager.shared.getCategoriesUsingLisitner()
+        firestoreCategoryManager.getCategoriesUsingLisitner()
             .sink { [weak self] returnedCategories in
                 self?.categories = returnedCategories
             }

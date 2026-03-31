@@ -23,8 +23,26 @@ class ProductStackViewModel: ObservableObject {
     
     var cancellables = Set<AnyCancellable>()
     
-    init(product: ProductModel) {
+    let firestoreUserManager: FirestoreUserProtocol
+    let firestoreProductManager: FirestoreProductProtocol
+    let firestoreCategoryManager: FirestoreCategoryProtocol
+    let firestoreFavoriteManager: FirestoreFavoriteProtocol
+    let firestoreCartManager: FirestoreCartProtocol
+    
+    init(
+        product: ProductModel,
+        firestoreUserManager: FirestoreUserProtocol,
+        firestoreProductManager: FirestoreProductProtocol,
+        firestoreCategoryManager: FirestoreCategoryProtocol,
+        firestoreFavoriteManager: FirestoreFavoriteProtocol,
+        firestoreCartManager: FirestoreCartProtocol
+    ) {
         self.product = product
+        self.firestoreUserManager = firestoreUserManager
+        self.firestoreProductManager = firestoreProductManager
+        self.firestoreCategoryManager = firestoreCategoryManager
+        self.firestoreFavoriteManager = firestoreFavoriteManager
+        self.firestoreCartManager = firestoreCartManager
         getProductCategory(categoryId: product.categoryId)
         if !product.id.isEmpty {
             getProductSizes(productId: product.id)
@@ -35,7 +53,7 @@ class ProductStackViewModel: ObservableObject {
     func addFavoriteProduct(product: ProductModel) {
         Task {
             do {
-                try await FirestoreFavoriteManager.shared.addFavoriteProduct(productId: product.id)
+                try await firestoreFavoriteManager.addFavoriteProduct(productId: product.id)
             } catch {
                 print(error)
             }
@@ -45,7 +63,7 @@ class ProductStackViewModel: ObservableObject {
     func getProductCategory(categoryId: String) {
         Task {
             do {
-                self.productCategory = try await FirestoreCategoryManager.shared.getCategory(categoryId: categoryId)
+                self.productCategory = try await firestoreCategoryManager.getCategory(categoryId: categoryId)
             } catch {
                 print(error)
             }
@@ -53,7 +71,7 @@ class ProductStackViewModel: ObservableObject {
     }
     
     func getProductSizes(productId: String) {
-        FirestoreProductManager.shared.getProductSizesUsingListener(productId: productId)
+        firestoreProductManager.getProductSizesUsingListener(productId: productId)
             .sink { [weak self] productSizes in
                 self?.sizes = productSizes
                 self?.selectedSize = productSizes.first
@@ -64,14 +82,14 @@ class ProductStackViewModel: ObservableObject {
     func saveSize(productId: String) async throws {
         guard let size = Int(productSize),
               let stock = Int(productSizeStock) else {return}
-        try await FirestoreProductManager.shared.saveSize(productId: productId, size: size, stock: stock)
+        try await firestoreProductManager.saveSize(productId: productId, size: size, stock: stock)
     }
     
     func getAuthenticatedUser() {
         guard let authedUser = Auth.auth().currentUser else {return}
         Task {
             do {
-                self.user = try await FirestoreUserManager.shared.getUser(userId: authedUser.uid)
+                self.user = try await firestoreUserManager.getUser(userId: authedUser.uid)
             } catch {
                 print(error)
             }
@@ -88,7 +106,7 @@ extension ProductStackViewModel {
         guard let authedUser = Auth.auth().currentUser, let selectedSize else { return }
         Task {
             do {
-                try await FirestoreCartManager.shared.addItemToCart(userId: authedUser.uid, productId: product.id, sizeId: selectedSize.id)
+                try await firestoreCartManager.addItemToCart(userId: authedUser.uid, productId: product.id, sizeId: selectedSize.id)
             } catch {
                 print(error)
             }

@@ -9,13 +9,17 @@ import SwiftUI
 
 struct ProductsView: View {
     
-    @StateObject var vm = ProductViewModel()
+    @StateObject var vm: ProductViewModel
     @StateObject var favVm = FavoritesViewModel()
     @State private var columns: [GridItem] = [
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
     @State var showAddProduct: Bool = false
+    
+    init() {
+        _vm = StateObject(wrappedValue: ProductHelper.makeProductView())
+    }
     
     var body: some View {
         ZStack {
@@ -88,6 +92,17 @@ extension ProductsView {
         .bold()
     }
     
+}
+
+
+
+struct ProductHelper {
     
+    static func makeProductView() -> ProductViewModel {
+        let firestoreUserManager: FirestoreUserProtocol = FirestoreUserManager()
+        let firestoreProductManager: FirestoreProductProtocol = FirestoreProductManager()
+        let firestoreCategoryManager: FirestoreCategoryProtocol = FirestoreCategoryManager()
+        return ProductViewModel(firestoreUserManager: firestoreUserManager, firestoreProductManager: firestoreProductManager, firesoreCategoryManager: firestoreCategoryManager)
+    }
     
 }

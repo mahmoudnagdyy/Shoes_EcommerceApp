@@ -9,13 +9,17 @@ import SwiftUI
 
 struct HomeView: View {
     
-    @StateObject var vm = HomeViewModel()
+    @StateObject var vm: HomeViewModel
     @StateObject var favVm = FavoritesViewModel()
     
     private var columns: [GridItem] = [
         GridItem(.flexible()),
         GridItem(.flexible()),
     ]
+    
+    init() {
+        _vm = StateObject(wrappedValue: HomeHelper.makeHomeView())
+    }
     
     var body: some View {
         
@@ -178,6 +182,18 @@ extension HomeView {
             }
         }
         .transition(.opacity)
+    }
+    
+}
+
+
+struct HomeHelper {
+    
+    static func makeHomeView() -> HomeViewModel {
+        let firestoreUserManager: FirestoreUserProtocol = FirestoreUserManager()
+        let firestoreProductManager: FirestoreProductProtocol = FirestoreProductManager()
+        let firestoreCategoryManager: FirestoreCategoryProtocol = FirestoreCategoryManager()
+        return HomeViewModel(firestoreUserManager: firestoreUserManager, firestoreProductManager: firestoreProductManager, firestoreCategoryManager: firestoreCategoryManager)
     }
     
 }

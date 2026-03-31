@@ -26,7 +26,7 @@ struct AddCategoryView: View {
 }
 
 #Preview {
-    AddCategoryView(vm: CategoryViewModel())
+    AddCategoryView(vm: CategoryViewModel(firestoreCategoryManager: FirestoreCategoryManager()))
 }
 
 

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RootView: View {
     
-    @StateObject var vm = RootViewModel()
+    @StateObject var vm = RootViewModel(firestoreUserManager: FirestoreUserManager())
     @State var selectedTab: TabModel = TabModel(title: "home", iconName: "house.fill")
     let onLogoutButtonPressed: () -> Void
     

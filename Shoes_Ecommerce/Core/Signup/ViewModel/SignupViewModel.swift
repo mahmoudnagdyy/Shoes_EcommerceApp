@@ -18,4 +18,25 @@ class SignupViewModel: ObservableObject {
     
     @Published var signupError: String? = nil
     
+    let authManager: AutheServiceProtocol
+    
+    init(authManager: AutheServiceProtocol) {
+        self.authManager = authManager
+    }
+    
+    
+    func signupWithEmailAndPassword(firstName: String, lastName: String, email: String, password: String) async throws {
+        try await authManager.signUpWithEmailAndPassword(firstName: firstName, lastName: lastName, email: email, password: password)
+        
+        self.firstName = ""
+        self.email = ""
+        self.lastName = ""
+        self.password = ""
+        self.signupError = nil
+    }
+    
+    func signInWithGoogle() async throws {
+        try await authManager.signInWithGoogle()
+    }
+    
 }

@@ -14,6 +14,11 @@ struct AddSizeView: View {
     @Environment(\.dismiss) var dismiss
     @State var isLoading: Bool = false
     
+    init(vm: ProductStackViewModel, product: ProductModel) {
+        self.vm = vm
+        self.product = product
+    }
+    
     var body: some View {
         ZStack {
             // background
@@ -28,7 +33,7 @@ struct AddSizeView: View {
 #Preview {
     let product = ProductModel(id: "1", productName: "nike", categoryId: "2", description: "", images: [], price: 0)
     
-    AddSizeView(vm: ProductStackViewModel(product: product), product: product)
+    AddSizeView(vm: ProductStackViewModel(product: product, firestoreUserManager: FirestoreUserManager(), firestoreProductManager: FirestoreProductManager(), firestoreCategoryManager: FirestoreCategoryManager(), firestoreFavoriteManager: FirestoreFavoriteManager(), firestoreCartManager: FirestoreCartManager()), product: product)
 }
 
 

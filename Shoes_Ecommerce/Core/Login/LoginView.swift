@@ -9,10 +9,18 @@ import SwiftUI
 
 struct LoginView: View {
     
-    @StateObject var vm = LoginViewModel()
+    @StateObject var vm: LoginViewModel
     
     let onSignupLinkPressed: () -> Void
     let onLoginButtonPressed: () -> Void
+    
+    init(onSignupLinkPressed: @escaping () -> Void,
+         onLoginButtonPressed: @escaping () -> Void
+    ) {
+        self.onSignupLinkPressed = onSignupLinkPressed
+        self.onLoginButtonPressed = onLoginButtonPressed
+        _vm =  StateObject(wrappedValue: LoginAuthHelper.makeLoginView())
+    }
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -120,7 +128,8 @@ extension LoginView {
         GoogleSignInButton {
             Task {
                 do {
-                    try await AuthenticationManager.shared.signInWithGoogle()
+                    try await vm.signInWithGoogle()
+                    UserDefaults.standard.set(true, forKey: "isLoggedIn")
                     onLoginButtonPressed()
                 } catch {
                     print(error)
@@ -137,16 +146,28 @@ extension LoginView {
     private func loginSubmitButtonFunction() {
         Task {
             do {
-                try await AuthenticationManager.shared.signInWithEmailAndPassword(email: vm.email, password: vm.password)
-                vm.email = ""
-                vm.password = ""
-                vm.loginError = nil
+                try await vm.loginWithEmailAndPassword(email: vm.email, password: vm.password)
+                UserDefaults.standard.set(true, forKey: "isLoggedIn")
                 onLoginButtonPressed()
             } catch {
                 vm.loginError = "Email or password is incorrect."
                 print(error)
             }
         }
+    }
+    
+}
+
+
+
+
+struct LoginAuthHelper {
+    
+    static func makeLoginView() -> LoginViewModel {
+        let googleService: GoogleSignInServiceProtocol = SignInWithGoogleHelper()
+        let firestoreUserManager: FirestoreUserProtocol = FirestoreUserManager()
+        let authManager: AutheServiceProtocol = AuthenticationManager(googleService: googleService, firestoreUserManager: firestoreUserManager)
+        return LoginViewModel(authManager: authManager)
     }
     
 }

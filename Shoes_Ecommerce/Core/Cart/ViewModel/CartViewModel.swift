@@ -22,7 +22,10 @@ class CartViewModel: ObservableObject {
         }
     }
     
-    init() {
+    private let firestoreCartManager: FirestoreCartProtocol
+    
+    init(firestoreCartManager: FirestoreCartProtocol) {
+        self.firestoreCartManager = firestoreCartManager
         addSubsribers()
     }
     
@@ -32,7 +35,7 @@ class CartViewModel: ObservableObject {
     
     func getCartItems() {
         guard let authedUser = Auth.auth().currentUser else { return }
-        FirestoreCartManager.shared.getCartItemsUsingListener(userId: authedUser.uid)
+        firestoreCartManager.getCartItemsUsingListener(userId: authedUser.uid)
             .sink { [weak self] returnedCartItems in
                 self?.cartItems = returnedCartItems
             }
@@ -43,7 +46,7 @@ class CartViewModel: ObservableObject {
         guard let authedUser = Auth.auth().currentUser else { return }
         Task {
             do {
-                try await FirestoreCartManager.shared.incrementItemQuantity(
+                try await firestoreCartManager.incrementItemQuantity(
                     userId: authedUser.uid,
                     productId: cartItem.product.id,
                     sizeId: sizeId
@@ -58,7 +61,7 @@ class CartViewModel: ObservableObject {
         guard let authedUser = Auth.auth().currentUser else { return }
         Task {
             do {
-                try await FirestoreCartManager.shared.decrementItemQuantity(
+                try await firestoreCartManager.decrementItemQuantity(
                     userId: authedUser.uid,
                     productId: cartItem.product.id,
                     sizeId: sizeId

@@ -9,8 +9,12 @@ import SwiftUI
 
 struct DashboardView: View {
     
-    @StateObject var vm = DashboardViewModel()
+    @StateObject var vm: DashboardViewModel
     @Environment(\.dismiss) var dismiss
+    
+    init() {
+        _vm = StateObject(wrappedValue: DashboardHelper.makeDashboardView())
+    }
     
     var body: some View {
         ZStack {
@@ -91,6 +95,19 @@ extension DashboardView {
                     .foregroundStyle(.white)
                     .font(.headline)
             }
+    }
+    
+}
+
+
+
+
+struct DashboardHelper {
+    
+    static func makeDashboardView() -> DashboardViewModel {
+        let firestoreProductManager: FirestoreProductProtocol = FirestoreProductManager()
+        let firestoreCategoryManager = FirestoreCategoryManager()
+        return DashboardViewModel(firestoreProductManager: firestoreProductManager, firestoreCategoryManager: firestoreCategoryManager)
     }
     
 }

@@ -9,12 +9,18 @@ import Foundation
 internal import Combine
 import FirebaseAuth
 
-class AuthenticationManager {
-    static let shared = AuthenticationManager()
-    private init() {}
+class AuthenticationManager: AutheServiceProtocol {
+    
+    let googleService: GoogleSignInServiceProtocol
+    let firestoreUserManager: FirestoreUserProtocol
+    
+    init(googleService: GoogleSignInServiceProtocol, firestoreUserManager: FirestoreUserProtocol) {
+        self.googleService = googleService
+        self.firestoreUserManager = firestoreUserManager
+    }
     
     func signInWithGoogle() async throws {
-        let authResult = try await SignInWithGoogleHelper.shared.signInWithGoogleSetup()
+        let authResult = try await googleService.signInWithGoogleSetup()
         let fName = authResult.user.displayName?.split(separator: " ").first ?? ""
         let lName = authResult.user.displayName?.split(separator: " ").last ?? ""
         let user = UserModel(
@@ -26,7 +32,7 @@ class AuthenticationManager {
             image: nil
         )
         
-        try await FirestoreUserManager.shared.saveUser(user: user)
+        try await firestoreUserManager.saveUser(user: user)
     }
     
     
@@ -50,7 +56,7 @@ extension AuthenticationManager {
             photoUrl: nil,
             image: nil
         )
-        try await FirestoreUserManager.shared.saveUser(user: user)
+        try await firestoreUserManager.saveUser(user: user)
     }
     
 }

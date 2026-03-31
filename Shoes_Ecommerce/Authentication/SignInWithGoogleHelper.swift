@@ -53,12 +53,7 @@ enum SignInWithGoogleError: Error, LocalizedError {
 }
 
 
-class SignInWithGoogleHelper {
-    
-    static let shared = SignInWithGoogleHelper()
-    
-    private init() {}
-    
+class SignInWithGoogleHelper: GoogleSignInServiceProtocol {
     
     func signInWithGoogleSetup() async throws -> AuthDataResult {
         guard let topVC = UIApplication.shared.topViewController else {

@@ -16,13 +16,15 @@ class FavoritesViewModel: ObservableObject {
     @Published var favoriteProducts: [ProductModel] = []
     var cancellables = Set<AnyCancellable>()
     
+    let firestoreFavoriteManager: FirestoreFavoriteProtocol = FirestoreFavoriteManager()
+    
     init() {
         getFavoriteProducts()
     }
     
     private func getFavoriteProducts() {
         guard let authedUser = Auth.auth().currentUser else {return}
-        FirestoreFavoriteManager.shared.getFavoriteProductsUsingListiner(userId: authedUser.uid)
+        firestoreFavoriteManager.getFavoriteProductsUsingListiner(userId: authedUser.uid)
             .sink { [weak self] returnedFavProducts in
                 self?.favoriteProducts = returnedFavProducts
             }
@@ -32,7 +34,7 @@ class FavoritesViewModel: ObservableObject {
     func addFavoriteProduct(product: ProductModel) {
         Task {
             do {
-                try await FirestoreFavoriteManager.shared.addFavoriteProduct(productId: product.id)
+                try await firestoreFavoriteManager.addFavoriteProduct(productId: product.id)
             } catch {
                 print(error)
             }

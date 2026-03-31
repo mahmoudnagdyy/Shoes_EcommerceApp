@@ -42,7 +42,12 @@ struct UploadUserImageView: View {
 }
 
 #Preview {
-    UploadUserImageView(vm: ProfileViewModel())
+    
+    let googleService: GoogleSignInServiceProtocol = SignInWithGoogleHelper()
+    let firestoreUserManager: FirestoreUserProtocol = FirestoreUserManager()
+    let authManager: AutheServiceProtocol = AuthenticationManager(googleService: googleService, firestoreUserManager: firestoreUserManager)
+    
+    UploadUserImageView(vm: ProfileViewModel(authManager: authManager, firestoreUserManager: firestoreUserManager))
 }
 
 

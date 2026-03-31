@@ -9,13 +9,10 @@ import Foundation
 internal import Combine
 import FirebaseFirestore
 
-class FirestoreCategoryManager {
+class FirestoreCategoryManager: FirestoreCategoryProtocol {
     
-    static let shared = FirestoreCategoryManager()
     private let categoriesCollection = Firestore.firestore().collection("categories")
-    
-    private init() {}
-    
+        
     private func categoryDocument(categoryId: String) -> DocumentReference {
         categoriesCollection.document(categoryId)
     }

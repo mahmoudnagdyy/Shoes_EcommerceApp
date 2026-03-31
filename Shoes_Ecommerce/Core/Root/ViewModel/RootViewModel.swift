@@ -17,7 +17,10 @@ class RootViewModel: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     
-    init() {
+    let firestoreUserManager: FirestoreUserProtocol
+    
+    init(firestoreUserManager: FirestoreUserProtocol) {
+        self.firestoreUserManager = firestoreUserManager
         getAuthenticatedUser()
     }
     
@@ -26,7 +29,7 @@ class RootViewModel: ObservableObject {
         
         Task {
             do {
-                self.user = try await FirestoreUserManager.shared.getUser(userId: authedUser.uid)
+                self.user = try await firestoreUserManager.getUser(userId: authedUser.uid)
             } catch {
                 print(error)
             }

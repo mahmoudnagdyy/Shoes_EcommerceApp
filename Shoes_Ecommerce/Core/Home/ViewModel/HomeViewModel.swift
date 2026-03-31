@@ -30,7 +30,18 @@ class HomeViewModel: ObservableObject {
     @Published var filteredProducts: [ProductModel] = []
     @Published var searchResults: [ProductModel] = []
     
-    init() {
+    let firestoreUserManager: FirestoreUserProtocol
+    let firestoreProductManager: FirestoreProductProtocol
+    let firestoreCategoryManager: FirestoreCategoryProtocol
+    
+    init(
+        firestoreUserManager: FirestoreUserProtocol,
+        firestoreProductManager: FirestoreProductProtocol,
+        firestoreCategoryManager: FirestoreCategoryProtocol
+    ) {
+        self.firestoreUserManager = firestoreUserManager
+        self.firestoreProductManager = firestoreProductManager
+        self.firestoreCategoryManager = firestoreCategoryManager
         addSubscribers()
     }
     
@@ -43,7 +54,7 @@ class HomeViewModel: ObservableObject {
     
     private func getUser() {
         guard let authedUser = Auth.auth().currentUser else { return }
-        FirestoreUserManager.shared.getUserUsingLisitner(userId: authedUser.uid)
+        firestoreUserManager.getUserUsingLisitner(userId: authedUser.uid)
             .sink { [weak self] returnedUser in
                 self?.user = returnedUser
             }
@@ -51,7 +62,7 @@ class HomeViewModel: ObservableObject {
     }
     
     private func getCategories() {
-        FirestoreCategoryManager.shared.getCategoriesUsingLisitner()
+        firestoreCategoryManager.getCategoriesUsingLisitner()
             .sink { [weak self] returnedCategories in
                 self?.categories = returnedCategories
                 self?.selectedCategory = returnedCategories.first
@@ -60,7 +71,7 @@ class HomeViewModel: ObservableObject {
     }
     
     private func getAllProducts() {
-        FirestoreProductManager.shared.getProductsUsingListener()
+        firestoreProductManager.getProductsUsingListener()
             .sink { [weak self] returnedProducts in
                 self?.allProducts = returnedProducts
             }

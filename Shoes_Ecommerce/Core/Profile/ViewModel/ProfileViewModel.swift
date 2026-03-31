@@ -34,13 +34,18 @@ class ProfileViewModel: ObservableObject {
     }
     @Published var isLoading: Bool = false
     
-    init() {
+    let firestoreUserManager: FirestoreUserProtocol
+    let authManager: AutheServiceProtocol
+    
+    init(authManager: AutheServiceProtocol, firestoreUserManager: FirestoreUserProtocol) {
+        self.firestoreUserManager = firestoreUserManager
+        self.authManager = authManager
         getUser()
     }
     
     func getUser() {
         guard let authedUser = Auth.auth().currentUser else { return }
-        FirestoreUserManager.shared.getUserUsingLisitner(userId: authedUser.uid)
+        firestoreUserManager.getUserUsingLisitner(userId: authedUser.uid)
             .sink { [weak self] returnedUser in
                 self?.user = returnedUser
             }
@@ -50,7 +55,11 @@ class ProfileViewModel: ObservableObject {
     func uploadImage() async throws {
         guard let user, let image else { return }
         let returnedImage = try await UserService.shared.uploadPhoto(userId: user.id, image: image)
-        try await FirestoreUserManager.shared.uploadImage(userId: user.id, image: returnedImage)
+        try await firestoreUserManager.uploadImage(userId: user.id, image: returnedImage)
+    }
+    
+    func logout() throws {
+        try authManager.logout()
     }
     
 }

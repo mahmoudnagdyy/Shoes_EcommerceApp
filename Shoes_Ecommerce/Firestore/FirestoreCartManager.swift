@@ -11,13 +11,12 @@ internal import Combine
 
 
 
-class FirestoreCartManager {
+class FirestoreCartManager: FirestoreCartProtocol {
     
-    static let shared = FirestoreCartManager()
     private let cartCollection = Firestore.firestore().collection("cart")
     
-    private init() {}
-    
+    private let firestoreProductsManager: FirestoreProductProtocol = FirestoreProductManager()
+        
     private func cartDocument(userId: String) -> DocumentReference {
         cartCollection.document(userId)
     }
@@ -71,8 +70,8 @@ class FirestoreCartManager {
         var cartItems: [CartItemModel] = []
             do {
                 for item in items {
-                    let product = try await FirestoreProductManager.shared.getProduct(productId: item.productId)
-                    let size = try await FirestoreProductManager.shared.getSize(productId: product.id, sizeId: item.sizeId)
+                    let product = try await firestoreProductsManager.getProduct(productId: item.productId)
+                    let size = try await firestoreProductsManager.getSize(productId: product.id, sizeId: item.sizeId)
                     let cartItem = CartItemModel(id: item.id, product: product, size: size, quantity: item.quantity)
                     cartItems.append(cartItem)
                 }

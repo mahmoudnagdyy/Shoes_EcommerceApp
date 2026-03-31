@@ -41,7 +41,7 @@ struct CartTotalPriceItemView: View {
 }
 
 #Preview {
-    CartTotalPriceItemView(vm: CartViewModel())
+    CartTotalPriceItemView(vm: CartViewModel(firestoreCartManager: FirestoreCartManager()))
 }
 
 

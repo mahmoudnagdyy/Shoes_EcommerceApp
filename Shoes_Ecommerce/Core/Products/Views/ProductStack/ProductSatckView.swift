@@ -19,7 +19,7 @@ struct ProductSatckView: View {
     }
     
     init(product: ProductModel, favVm: FavoritesViewModel) {
-        _vm = StateObject(wrappedValue: ProductStackViewModel(product: product))
+        _vm = StateObject(wrappedValue: ProductStackHelper.makeProductStackView(product: product))
         self.product = product
         self.favVM = favVm
     }
@@ -222,6 +222,28 @@ extension ProductSatckView {
         }
         .font(.title2)
         .bold()
+    }
+    
+}
+
+
+
+
+struct ProductStackHelper {
+    
+    static func makeProductStackView(product: ProductModel) -> ProductStackViewModel {
+        let firestoreUserManager: FirestoreUserProtocol = FirestoreUserManager()
+        let firestoreProductManager: FirestoreProductProtocol = FirestoreProductManager()
+        let firestoreCategoryManager: FirestoreCategoryProtocol = FirestoreCategoryManager()
+        let firestoreFavoriteManager: FirestoreFavoriteProtocol = FirestoreFavoriteManager()
+        let firestoreCartManager: FirestoreCartProtocol = FirestoreCartManager()
+        return ProductStackViewModel(
+            product: product,
+            firestoreUserManager: firestoreUserManager,
+            firestoreProductManager: firestoreProductManager,
+            firestoreCategoryManager: firestoreCategoryManager,
+            firestoreFavoriteManager: firestoreFavoriteManager,
+            firestoreCartManager: firestoreCartManager)
     }
     
 }

@@ -9,9 +9,14 @@ import SwiftUI
 
 struct ProfileView: View {
     
-    @StateObject var vm = ProfileViewModel()
+    @StateObject var vm: ProfileViewModel
     let onLogoutButtonPressed: () -> Void
     @State var showDashboard: Bool = false
+    
+    init(onLogoutButtonPressed: @escaping () -> Void) {
+        _vm = StateObject(wrappedValue: ProfileHelper.makeProfileView())
+        self.onLogoutButtonPressed = onLogoutButtonPressed
+    }
     
     var body: some View {
         ZStack {
@@ -86,7 +91,8 @@ extension ProfileView {
     private var logoutButton: some View {
         Button {
             do {
-                try AuthenticationManager.shared.logout()
+                try vm.logout()
+                UserDefaults.standard.set(false, forKey: "isLoggedIn")
                 onLogoutButtonPressed()
             } catch {
                 print(error)
@@ -124,6 +130,19 @@ extension ProfileView {
         let firstName = vm.user?.firstName ?? "fName"
         let lastName = vm.user?.lastName ?? "lName"
         return Text("\(firstName) \(lastName)".capitalized).font(.largeTitle).bold()
+    }
+    
+}
+
+
+
+struct ProfileHelper {
+    
+    static func makeProfileView() -> ProfileViewModel {
+        let googleService: GoogleSignInServiceProtocol = SignInWithGoogleHelper()
+        let firestoreUserManager: FirestoreUserProtocol = FirestoreUserManager()
+        let authManager: AutheServiceProtocol = AuthenticationManager(googleService: googleService, firestoreUserManager: firestoreUserManager)
+        return ProfileViewModel(authManager: authManager, firestoreUserManager: firestoreUserManager)
     }
     
 }

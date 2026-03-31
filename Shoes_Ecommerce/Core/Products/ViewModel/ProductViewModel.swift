@@ -36,8 +36,19 @@ class ProductViewModel: ObservableObject {
     
     @Published var user: UserModel? = nil
     
+    let firestoreUserManager: FirestoreUserProtocol
+    let firestoreProductManager: FirestoreProductProtocol
+    let firesoreCategoryManager: FirestoreCategoryProtocol
     
-    init() {
+    
+    init(
+        firestoreUserManager: FirestoreUserProtocol,
+        firestoreProductManager: FirestoreProductProtocol,
+        firesoreCategoryManager: FirestoreCategoryProtocol
+    ) {
+        self.firestoreUserManager = firestoreUserManager
+        self.firestoreProductManager = firestoreProductManager
+        self.firesoreCategoryManager = firesoreCategoryManager
         getAuthenticatedUser()
         addSubscribers()
         getProductsWithPagination()
@@ -51,7 +62,7 @@ class ProductViewModel: ObservableObject {
 //            }
 //            .store(in: &cancellables)
         
-        FirestoreCategoryManager.shared.getCategoriesUsingLisitner()
+        firesoreCategoryManager.getCategoriesUsingLisitner()
             .sink { [weak self] returnedCategories in
                 self?.categories = returnedCategories
                                 
@@ -70,7 +81,7 @@ class ProductViewModel: ObservableObject {
               let productCategory,
               let productPrice = Double(productPrice) else {return}
         let returnedImages = try await ProductService.shared.uploadImages(images: productImages)
-        try await FirestoreProductManager.shared.createProduct(
+        try await firestoreProductManager.createProduct(
             productName: productName,
             categoryId: productCategory.id,
             productDescription: productDescription,
@@ -81,7 +92,7 @@ class ProductViewModel: ObservableObject {
     func getProductsWithPagination() {
         Task {
             do {
-                let result = try await FirestoreProductManager.shared.getProductWithPagination(limit: 10, lastDocument: lastDocument)
+                let result = try await firestoreProductManager.getProductWithPagination(limit: 10, lastDocument: lastDocument)
                 self.lastDocument = result.lastDocument
                 self.products.append(contentsOf: result.products)
                 self.hasMore = result.hasMore
@@ -95,7 +106,7 @@ class ProductViewModel: ObservableObject {
         guard let authedUser = Auth.auth().currentUser else {return}
         Task {
             do {
-                self.user = try await FirestoreUserManager.shared.getUser(userId: authedUser.uid)
+                self.user = try await firestoreUserManager.getUser(userId: authedUser.uid)
             } catch {
                 print(error)
             }

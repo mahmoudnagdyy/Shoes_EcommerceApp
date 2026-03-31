@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct ContentView: View {
     
@@ -13,7 +14,7 @@ struct ContentView: View {
         case signup, login, root
     }
     
-    @State var currentScreen: allScreens = .root
+    @State var currentScreen: allScreens = .login
     
     var body: some View {
         ZStack { 
@@ -25,6 +26,17 @@ struct ContentView: View {
             case .root:
                 rootView
             }
+        }
+        .onAppear {
+            
+            
+            if Auth.auth().currentUser != nil {
+                currentScreen = .root
+            }
+            
+//            if UserDefaults.standard.bool(forKey: "isLoggedIn") {
+//                currentScreen = .root
+//            }
         }
     }
 }

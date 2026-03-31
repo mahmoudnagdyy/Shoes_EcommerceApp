@@ -17,4 +17,20 @@ class LoginViewModel: ObservableObject {
     
     @Published var loginError: String? = nil
     
+    let authManager: AutheServiceProtocol
+    
+    init(authManager: AutheServiceProtocol) {
+        self.authManager = authManager
+    }
+    
+    func loginWithEmailAndPassword(email: String, password: String) async throws {
+        try await authManager.signInWithEmailAndPassword(email: email, password: password)
+        self.email = ""
+        self.password = ""
+        self.loginError = nil
+    }
+    
+    func signInWithGoogle() async throws {
+        try await authManager.signInWithGoogle()
+    }
 }

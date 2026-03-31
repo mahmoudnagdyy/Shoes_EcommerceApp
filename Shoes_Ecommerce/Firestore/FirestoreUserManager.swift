@@ -9,14 +9,10 @@ import Foundation
 internal import Combine
 import FirebaseFirestore
 
-class FirestoreUserManager {
-    
-    static let shared = FirestoreUserManager()
-    
+class FirestoreUserManager: FirestoreUserProtocol {
+        
     private let userCollection = Firestore.firestore().collection("users")
-    
-    private init() {}
-    
+        
     private func userDocument(userID: String) -> DocumentReference {
         userCollection.document(userID)
     }
