@@ -17,7 +17,8 @@ class CategoryService {
     
     
     func uploadCategoryPhoto(categoryName: String, image: UIImage) async throws -> ImageModel {
-        guard let url = URL(string: "http://localhost:5050/category") else {
+        guard let url = URL(string: "http://localhost:5050/category"),
+              let imageData = image.jpegData(compressionQuality: 0.8) else {
             throw URLError(.badURL)
         }
         
@@ -33,10 +34,7 @@ class CategoryService {
         data.append("--\(boundary)\r\n")
         data.append("Content-Disposition: form-data; name=\"categoryName\"\r\n\r\n")
         data.append("\(categoryName)\r\n")
-        
-        // image
-        let imageData = image.jpegData(compressionQuality: 0.8)!
-        
+                
         data.append("--\(boundary)\r\n")
         data.append("Content-Disposition: form-data; name=\"image\"; filename=\"profile.jpg\"\r\n")
         data.append("Content-Type: image/jpeg\r\n\r\n")

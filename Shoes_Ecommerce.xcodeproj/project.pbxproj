@@ -16,6 +16,16 @@
 		B68617C72F6F0A0900A05976 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B68617C62F6F0A0900A05976 /* GoogleSignInSwift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		B63EBC002F7DC73B0074111E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B66390602F6E11C700852DE7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B66390672F6E11C700852DE7;
+			remoteInfo = Shoes_Ecommerce;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		B680DC162F74BE6A0018DA6A /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -30,10 +40,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B63EBBFC2F7DC73B0074111E /* ShoesEcommerce_UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShoesEcommerce_UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B66390682F6E11C700852DE7 /* Shoes_Ecommerce.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shoes_Ecommerce.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		B63EBBFD2F7DC73B0074111E /* ShoesEcommerce_UnitTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ShoesEcommerce_UnitTests;
+			sourceTree = "<group>";
+		};
 		B663906A2F6E11C700852DE7 /* Shoes_Ecommerce */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Shoes_Ecommerce;
@@ -42,6 +58,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B63EBBF92F7DC73B0074111E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B66390652F6E11C700852DE7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -63,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				B663906A2F6E11C700852DE7 /* Shoes_Ecommerce */,
+				B63EBBFD2F7DC73B0074111E /* ShoesEcommerce_UnitTests */,
 				B66390692F6E11C700852DE7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -71,6 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				B66390682F6E11C700852DE7 /* Shoes_Ecommerce.app */,
+				B63EBBFC2F7DC73B0074111E /* ShoesEcommerce_UnitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -78,6 +103,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		B63EBBFB2F7DC73B0074111E /* ShoesEcommerce_UnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B63EBC022F7DC73B0074111E /* Build configuration list for PBXNativeTarget "ShoesEcommerce_UnitTests" */;
+			buildPhases = (
+				B63EBBF82F7DC73B0074111E /* Sources */,
+				B63EBBF92F7DC73B0074111E /* Frameworks */,
+				B63EBBFA2F7DC73B0074111E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B63EBC012F7DC73B0074111E /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				B63EBBFD2F7DC73B0074111E /* ShoesEcommerce_UnitTests */,
+			);
+			name = ShoesEcommerce_UnitTests;
+			packageProductDependencies = (
+			);
+			productName = ShoesEcommerce_UnitTests;
+			productReference = B63EBBFC2F7DC73B0074111E /* ShoesEcommerce_UnitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		B66390672F6E11C700852DE7 /* Shoes_Ecommerce */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B66390732F6E11C800852DE7 /* Build configuration list for PBXNativeTarget "Shoes_Ecommerce" */;
@@ -115,9 +163,13 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 2620;
+				LastSwiftUpdateCheck = 2640;
 				LastUpgradeCheck = 2620;
 				TargetAttributes = {
+					B63EBBFB2F7DC73B0074111E = {
+						CreatedOnToolsVersion = 26.4;
+						TestTargetID = B66390672F6E11C700852DE7;
+					};
 					B66390672F6E11C700852DE7 = {
 						CreatedOnToolsVersion = 26.2;
 					};
@@ -144,11 +196,19 @@
 			projectRoot = "";
 			targets = (
 				B66390672F6E11C700852DE7 /* Shoes_Ecommerce */,
+				B63EBBFB2F7DC73B0074111E /* ShoesEcommerce_UnitTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B63EBBFA2F7DC73B0074111E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B66390662F6E11C700852DE7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -159,6 +219,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B63EBBF82F7DC73B0074111E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B66390642F6E11C700852DE7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -168,7 +235,59 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		B63EBC012F7DC73B0074111E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B66390672F6E11C700852DE7 /* Shoes_Ecommerce */;
+			targetProxy = B63EBC002F7DC73B0074111E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		B63EBC032F7DC73B0074111E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YRKMJ4536R;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "mahmoudnagdyy.ShoesEcommerce-UnitTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Shoes_Ecommerce.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Shoes_Ecommerce";
+			};
+			name = Debug;
+		};
+		B63EBC042F7DC73B0074111E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YRKMJ4536R;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "mahmoudnagdyy.ShoesEcommerce-UnitTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Shoes_Ecommerce.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Shoes_Ecommerce";
+			};
+			name = Release;
+		};
 		B66390712F6E11C800852DE7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -359,6 +478,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B63EBC022F7DC73B0074111E /* Build configuration list for PBXNativeTarget "ShoesEcommerce_UnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B63EBC032F7DC73B0074111E /* Debug */,
+				B63EBC042F7DC73B0074111E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B66390632F6E11C700852DE7 /* Build configuration list for PBXProject "Shoes_Ecommerce" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
