@@ -9,7 +9,8 @@ import SwiftUI
 
 struct CategoriesView: View {
     
-    @StateObject var vm = CategoryViewModel(firestoreCategoryManager: FirestoreCategoryManager())
+    @StateObject var vm = CategoryViewModel(firestoreCategoryManager: FirestoreCategoryManager(),
+                                            uploadPhotoService: CategoryService())
     @State private var columns: [GridItem] = [
         GridItem(.flexible()),
         GridItem(.flexible())
@@ -28,7 +29,7 @@ struct CategoriesView: View {
 }
 
 #Preview {
-    CategoriesView(vm: CategoryViewModel(firestoreCategoryManager: FirestoreCategoryManager()))
+    CategoriesView(vm: CategoryViewModel(firestoreCategoryManager: FirestoreCategoryManager(), uploadPhotoService: CategoryService()))
 }
 
 

@@ -47,7 +47,7 @@ struct UploadUserImageView: View {
     let firestoreUserManager: FirestoreUserProtocol = FirestoreUserManager()
     let authManager: AutheServiceProtocol = AuthenticationManager(googleService: googleService, firestoreUserManager: firestoreUserManager)
     
-    UploadUserImageView(vm: ProfileViewModel(authManager: authManager, firestoreUserManager: firestoreUserManager))
+    UploadUserImageView(vm: ProfileViewModel(authManager: authManager, firestoreUserManager: firestoreUserManager, uploadPhotoService: UserService()))
 }
 
 

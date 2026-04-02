@@ -8,15 +8,11 @@
 import Foundation
 import UIKit
 
-class UserService {
-    
-    static let shared = UserService()
-    
-    private init() {}
-    
+class UserService: UploadUserPhotoServiceProtocol {
     
     func uploadPhoto(userId: String, image: UIImage) async throws -> ImageModel {
-        guard let url = URL(string: "http://localhost:5050/user") else {
+        guard let url = URL(string: "http://localhost:5050/user"),
+              let imageData = image.jpegData(compressionQuality: 0.8) else {
             throw URLError(.badURL)
         }
         
@@ -33,8 +29,6 @@ class UserService {
         data.append("Content-Disposition: form-data; name=\"userId\"\r\n\r\n")
         data.append("\(userId)\r\n")
         
-        // image
-        let imageData = image.jpegData(compressionQuality: 0.8)!
         
         data.append("--\(boundary)\r\n")
         data.append("Content-Disposition: form-data; name=\"image\"; filename=\"profile.jpg\"\r\n")

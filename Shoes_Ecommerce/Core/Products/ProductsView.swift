@@ -102,7 +102,11 @@ struct ProductHelper {
         let firestoreUserManager: FirestoreUserProtocol = FirestoreUserManager()
         let firestoreProductManager: FirestoreProductProtocol = FirestoreProductManager()
         let firestoreCategoryManager: FirestoreCategoryProtocol = FirestoreCategoryManager()
-        return ProductViewModel(firestoreUserManager: firestoreUserManager, firestoreProductManager: firestoreProductManager, firesoreCategoryManager: firestoreCategoryManager)
+        let uploadPhotoService: UploadProductPhotoServiceProtocol = ProductService()
+        return ProductViewModel(firestoreUserManager: firestoreUserManager,
+                                firestoreProductManager: firestoreProductManager,
+                                firesoreCategoryManager: firestoreCategoryManager,
+                                uploadPhotoService: uploadPhotoService)
     }
     
 }

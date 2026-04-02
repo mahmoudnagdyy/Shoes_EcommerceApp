@@ -9,12 +9,7 @@ import Foundation
 import SwiftUI
 
 
-class CategoryService {
-    
-    static let shared = CategoryService()
-    
-    private init() {}
-    
+class CategoryService: UploadCategoryPhotoServiceProtocol {
     
     func uploadCategoryPhoto(categoryName: String, image: UIImage) async throws -> ImageModel {
         guard let url = URL(string: "http://localhost:5050/category"),

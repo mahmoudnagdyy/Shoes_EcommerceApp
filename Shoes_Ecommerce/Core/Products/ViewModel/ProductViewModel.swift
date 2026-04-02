@@ -39,16 +39,19 @@ class ProductViewModel: ObservableObject {
     let firestoreUserManager: FirestoreUserProtocol
     let firestoreProductManager: FirestoreProductProtocol
     let firesoreCategoryManager: FirestoreCategoryProtocol
+    let uploadPhotoService: UploadProductPhotoServiceProtocol
     
     
     init(
         firestoreUserManager: FirestoreUserProtocol,
         firestoreProductManager: FirestoreProductProtocol,
-        firesoreCategoryManager: FirestoreCategoryProtocol
+        firesoreCategoryManager: FirestoreCategoryProtocol,
+        uploadPhotoService: UploadProductPhotoServiceProtocol
     ) {
         self.firestoreUserManager = firestoreUserManager
         self.firestoreProductManager = firestoreProductManager
         self.firesoreCategoryManager = firesoreCategoryManager
+        self.uploadPhotoService = uploadPhotoService
         getAuthenticatedUser()
         addSubscribers()
         getProductsWithPagination()
@@ -80,7 +83,7 @@ class ProductViewModel: ObservableObject {
               let productImages,
               let productCategory,
               let productPrice = Double(productPrice) else {return}
-        let returnedImages = try await ProductService.shared.uploadImages(images: productImages)
+        let returnedImages = try await uploadPhotoService.uploadImages(images: productImages)
         try await firestoreProductManager.createProduct(
             productName: productName,
             categoryId: productCategory.id,

@@ -142,7 +142,11 @@ struct ProfileHelper {
         let googleService: GoogleSignInServiceProtocol = SignInWithGoogleHelper()
         let firestoreUserManager: FirestoreUserProtocol = FirestoreUserManager()
         let authManager: AutheServiceProtocol = AuthenticationManager(googleService: googleService, firestoreUserManager: firestoreUserManager)
-        return ProfileViewModel(authManager: authManager, firestoreUserManager: firestoreUserManager)
+        let uploadPhotoService: UploadUserPhotoServiceProtocol = UserService()
+        return ProfileViewModel(
+            authManager: authManager,
+            firestoreUserManager: firestoreUserManager,
+            uploadPhotoService: uploadPhotoService)
     }
     
 }

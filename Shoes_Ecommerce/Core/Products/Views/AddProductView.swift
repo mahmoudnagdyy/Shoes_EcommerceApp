@@ -26,7 +26,7 @@ struct AddProductView: View {
 }
 
 #Preview {
-    AddProductView(vm: ProductViewModel(firestoreUserManager: FirestoreUserManager(), firestoreProductManager: FirestoreProductManager(), firesoreCategoryManager: FirestoreCategoryManager()))
+    AddProductView(vm: ProductViewModel(firestoreUserManager: FirestoreUserManager(), firestoreProductManager: FirestoreProductManager(), firesoreCategoryManager: FirestoreCategoryManager(), uploadPhotoService: ProductService()))
 }
 
 

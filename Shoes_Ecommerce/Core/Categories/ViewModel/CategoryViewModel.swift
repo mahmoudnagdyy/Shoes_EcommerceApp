@@ -24,19 +24,21 @@ class CategoryViewModel: ObservableObject {
     var cancellables = Set<AnyCancellable>()
     
     let firestoreCategoryManager: FirestoreCategoryProtocol
-    
+    let uploadPhotoService: UploadCategoryPhotoServiceProtocol
     
     init(
-        firestoreCategoryManager: FirestoreCategoryProtocol
+        firestoreCategoryManager: FirestoreCategoryProtocol,
+        uploadPhotoService: UploadCategoryPhotoServiceProtocol
     ) {
         self.firestoreCategoryManager = firestoreCategoryManager
+        self.uploadPhotoService = uploadPhotoService
         getCategories()
     }
     
     
     func createCategory() async throws {
         guard let Categoryimage, !categoryName.isEmpty else {return}
-        let returnedImage = try await CategoryService.shared.uploadCategoryPhoto(categoryName: categoryName, image: Categoryimage)
+        let returnedImage = try await uploadPhotoService.uploadCategoryPhoto(categoryName: categoryName, image: Categoryimage)
         try await firestoreCategoryManager.createCategory(categoryName: categoryName, categoryImage: returnedImage)
     }
     

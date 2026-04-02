@@ -36,10 +36,16 @@ class ProfileViewModel: ObservableObject {
     
     let firestoreUserManager: FirestoreUserProtocol
     let authManager: AutheServiceProtocol
+    let uploadPhotoService: UploadUserPhotoServiceProtocol
     
-    init(authManager: AutheServiceProtocol, firestoreUserManager: FirestoreUserProtocol) {
+    init(
+        authManager: AutheServiceProtocol,
+        firestoreUserManager: FirestoreUserProtocol,
+        uploadPhotoService: UploadUserPhotoServiceProtocol
+    ) {
         self.firestoreUserManager = firestoreUserManager
         self.authManager = authManager
+        self.uploadPhotoService = uploadPhotoService
         getUser()
     }
     
@@ -54,7 +60,7 @@ class ProfileViewModel: ObservableObject {
     
     func uploadImage() async throws {
         guard let user, let image else { return }
-        let returnedImage = try await UserService.shared.uploadPhoto(userId: user.id, image: image)
+        let returnedImage = try await uploadPhotoService.uploadPhoto(userId: user.id, image: image)
         try await firestoreUserManager.uploadImage(userId: user.id, image: returnedImage)
     }
     

@@ -9,11 +9,7 @@ import Foundation
 import SwiftUI
 
 
-class ProductService {
-    
-    static let shared = ProductService()
-    
-    private init() {}
+class ProductService: UploadProductPhotoServiceProtocol {
     
     func uploadImages(images: [UIImage]) async throws -> [ImageModel] {
         guard let url = URL(string: "http://localhost:5050/product") else {
