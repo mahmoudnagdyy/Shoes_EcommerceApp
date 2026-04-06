@@ -100,10 +100,12 @@ extension HomeView {
             homeHeaderText
             Spacer()
             
-            if let image = vm.user?.image {
+            if let image = vm.user?.image,
+               !image.secureUrl.isEmpty {
                 UserWebImageItem(imageUrl: image.secureUrl, width: 60, height: 60)
             }
-            else if let photoUrl = vm.user?.photoUrl {
+            else if let photoUrl = vm.user?.photoUrl,
+                    !photoUrl.isEmpty {
                 UserWebImageItem(imageUrl: photoUrl, width: 60, height: 60)
             } else {
                 noUserImageIcon

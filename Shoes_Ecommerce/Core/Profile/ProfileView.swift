@@ -44,11 +44,13 @@ extension ProfileView {
                 
                 logoutButton
                 
-                if let image = vm.user?.image {
+                if let image = vm.user?.image,
+                   !image.secureUrl.isEmpty {
                     UserPhotoPickerItemView(imageLink: image.secureUrl,
                                         showChangeImageCover: $vm.showChangeImageCover)
                 }
-                else if let photoUrl = vm.user?.photoUrl {
+                else if let photoUrl = vm.user?.photoUrl,
+                        !photoUrl.isEmpty {
                     UserPhotoPickerItemView(imageLink: photoUrl,
                                         showChangeImageCover: $vm.showChangeImageCover)
                 } else {
